@@ -144,10 +144,25 @@ function displayChapterContent(chapterNumber) {
       console.log("Cover image not found.");
     }
 
-    // Setelah menampilkan cover, lanjutkan untuk menampilkan gambar chapter
-    displayChapterImages();
-  });
+    var coverPath1 = `./assets/images/MangaCover/BorutoTBV/Chapter${chapterNumber}/Cover1.png`;
+    imageExists(coverPath1, function (cover1Exists) {
+      if (cover1Exists) {
+        console.log(`Appending cover image: ${coverPath1}`);
 
+        var cover1Element = new Image();
+        cover1Element.src = coverPath1;
+        container.appendChild(cover1Element);
+      } else {
+        console.log("Cover1 image not found.");
+      }
+
+
+      
+      displayChapterImages();
+    }); 
+  });
+  
+  
   // Fungsi untuk menampilkan gambar-gambar chapter
   function displayChapterImages() {
     var i = 1;

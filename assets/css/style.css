@@ -657,27 +657,27 @@ body.Preview {
 }
 
 #chapterImages {
-  --width: 352px;
-  max-width: 100%;
-  --height: 528px;
-  width: var(--width);
-  height: var(--height);
+  overflow: hidden;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
   background-color: hsl(0, 0%, 35%);
-  overflow: hidden;
   display: flex;
-  flex-direction: column; /* Menetapkan tata letak kolom untuk elemen child */
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
 #chapterImages img {
-  max-width: 100%; /* Membuat gambar menjadi responsif */
-  height: auto; /* Menjaga aspek rasio gambar */
+  --width: 352px;
+  --height: 528px;
+  width: var(--width);
+  height: var(--height);
+  max-width: var(--width);
+  max-width: 100%; /* Gambar tidak akan melebihi lebar kontainer */
+  max-height: 100%; /* Gambar tidak akan melebihi tinggi kontainer */
   margin-top: 10px;
-  margin-bottom: 10px; /* Menambahkan jarak antara gambar-gambar */
+  margin-bottom: 10px;
 }
 
 .offer-card2 {

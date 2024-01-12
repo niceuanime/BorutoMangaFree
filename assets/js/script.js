@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * add event on element
  */
@@ -15,7 +13,6 @@ const addEventOnElem = function (elem, type, callback) {
     elem.addEventListener(type, callback);
   }
 }
-
 
 
 /**
@@ -114,3 +111,134 @@ function updateChapterDropdown() {
   // Mengubah nilai dropdown berdasarkan chapter saat ini
   document.getElementById('chapterDropdown').value = currentChapter;
 }
+
+
+
+
+
+// Fungsi untuk menampilkan konten chapter di halaman saat ini
+function displayChapterContent(chapterNumber) {
+  // Mendapatkan elemen container di Read.html
+  var container = document.getElementById("chapterImages");
+
+  if (!container) {
+    console.error("Error: Element with id 'chapterImages' not found.");
+    return;
+  }
+
+  console.log(`Selected chapter: ${chapterNumber}`);
+
+  // Membersihkan container dari gambar-gambar sebelumnya
+  container.innerHTML = "";
+
+  // Menampilkan Cover.png terlebih dahulu
+  var coverPath = `./assets/images/MangaCover/BorutoTBV/Chapter${chapterNumber}/Cover.png`;
+  imageExists(coverPath, function (coverExists) {
+    if (coverExists) {
+      console.log(`Appending cover image: ${coverPath}`);
+
+      var coverElement = new Image();
+      coverElement.src = coverPath;
+      container.appendChild(coverElement);
+    } else {
+      console.log("Cover image not found.");
+    }
+
+    // Setelah menampilkan cover, lanjutkan untuk menampilkan gambar chapter
+    displayChapterImages();
+  });
+
+  // Fungsi untuk menampilkan gambar-gambar chapter
+  function displayChapterImages() {
+    var i = 1;
+
+    // Fungsi untuk menampilkan gambar
+    function displayImage() {
+      var imagePath = `./assets/images/MangaCover/BorutoTBV/Chapter${chapterNumber}/image${i}.png`;
+
+      // Mengecek keberadaan gambar
+      imageExists(imagePath, function (exists) {
+        if (exists) {
+          console.log(`Appending image: ${imagePath}`);
+
+          var imageElement = new Image();
+          imageElement.src = imagePath;
+          container.appendChild(imageElement);
+
+          // Melanjutkan untuk menampilkan gambar berikutnya
+          i++;
+          displayImage();
+        } else {
+          // Menghentikan rekursi jika tidak ada gambar lagi
+          console.log("No more images found.");
+        }
+      });
+    }
+
+    // Memanggil fungsi untuk menampilkan gambar
+    displayImage();
+  }
+}
+
+// Fungsi untuk memeriksa keberadaan gambar
+function imageExists(url, callback) {
+  var img = new Image();
+  img.onload = function () {
+    callback(true);
+  };
+  img.onerror = function () {
+    callback(false);
+  };
+  img.src = url;
+}
+
+window.addEventListener("load", function () {
+  // Mendapatkan semua elemen link chapter di preview.html
+  var chapterLinks = document.querySelectorAll(".chapter-link");
+
+  if (!chapterLinks.length) {
+    console.error("Error: No elements with class 'chapter-link' found.");
+    return;
+  }
+
+  // Fungsi untuk menangani klik pada link chapter
+  function handleChapterClick(event) {
+    // Mencegah tindakan default dari link
+    event.preventDefault();
+
+    // Mendapatkan nomor chapter dari data-chapter atribut
+    var chapterNumber = event.currentTarget.getAttribute("data-chapter");
+
+    console.log(`Clicked on chapter ${chapterNumber}`);
+
+    // Menyimpan nomor chapter yang dipilih ke sessionStorage
+    sessionStorage.setItem("selectedChapter", chapterNumber);
+
+    // Menampilkan konten chapter di halaman saat ini
+    displayChapterContent(chapterNumber);
+  }
+
+  // Menambahkan event listener pada setiap link chapter
+  chapterLinks.forEach(function (link) {
+    link.addEventListener("click", handleChapterClick);
+  });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Mendapatkan elemen container di Read.html
+  var container = document.getElementById("chapterImages");
+
+  if (!container) {
+    console.error("Error: Element with id 'chapterImages' not found.");
+    return;
+  }
+
+  // Mengambil nomor chapter dari sessionStorage
+  var selectedChapter = sessionStorage.getItem("selectedChapter");
+
+  if (selectedChapter) {
+    console.log(`Selected chapter: ${selectedChapter}`);
+  } else {
+    console.error("Error: No selected chapter found.");
+  }
+});

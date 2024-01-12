@@ -10,7 +10,7 @@
     - primary meta tag
   -->
   <title>Boruto: Two Blue Vortex</title>
-  <meta name="title" content="Nxb - High Quality Manga">
+  <meta name="title" content="NxB - High Quality Manga">
   <meta name="description" content="This is a site to read Naruto x Boruto manga for free and in high quality">
 
   <!-- 
@@ -36,9 +36,9 @@
   -->
   <link rel="preload" as="image" href="./assets/images/hero-banner.jpg">
   <script>
-    document.addEventListener('contextmenu', function (e) {
+    <!-- document.addEventListener('contextmenu', function (e) {
       e.preventDefault();
-    });
+    }); -->
   </script>
 </head>
 
@@ -147,15 +147,21 @@
             <br>
 
             <ul class="chapter-container">
-              <a href="./Read1"><li id="Chapter" >Chapter 1<br><span id="TitleChapter">Boruto</span></li></a>
-              <a href="./Read1"><li id="Chapter" >Chapter 2<br><span id="TitleChapter">Tree</span></li></a>
-              <a href="./Read1"><li id="Chapter" >Chapter 3<br><span id="TitleChapter">Uzuhiko</span></li></a>
-              <a href="./Read1"><li id="Chapter" >Chapter 4<br><span id="TitleChapter">The Awakening</span></li></a>
-              <a href="./Read"><li id="Chapter" >Chapter 5<br><span id="TitleChapter">Target</span></li></a>
+              <a href="javascript:void(0);" data-chapter="1" class="chapter-link"><li id="Chapter">Chapter 1<br><span id="TitleChapter">Boruto</span></li></a>
+              <a href="javascript:void(0);" data-chapter="2" class="chapter-link"><li id="Chapter">Chapter 2<br><span id="TitleChapter">Tree</span></li></a>
+              <a href="javascript:void(0);" data-chapter="3" class="chapter-link"><li id="Chapter">Chapter 3<br><span id="TitleChapter">Uzuhiko</span></li></a>
+              <a href="javascript:void(0);" data-chapter="4" class="chapter-link"><li id="Chapter">Chapter 4<br><span id="TitleChapter">The Awakening</span></li></a>
+              <a href="javascript:void(0);" data-chapter="5" class="chapter-link"><li id="Chapter">Chapter 5<br><span id="TitleChapter">Target</span></li></a>
             </ul>
-          
+        
+
           </ul>
         </div>
+        <br>
+        <li>
+          <div id="chapterImages" style="--width: 352; --height: 528;"></div>
+        </li>
+        <br>
       </section>
 
   </main>

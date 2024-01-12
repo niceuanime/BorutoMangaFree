@@ -660,6 +660,30 @@ body.Read {
   height: auto; /* Menjaga proporsi tinggi gambar sesuai dengan lebar */
 }
 
+#chapterImages {
+  --width: 352px;
+  max-width: 100%;
+  --height: 528px;
+  width: var(--width);
+  height: var(--height);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-color: hsl(0, 0%, 35%);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column; /* Menetapkan tata letak kolom untuk elemen child */
+  align-items: center;
+  justify-content: center;
+}
+
+#chapterImages img {
+  max-width: 100%; /* Membuat gambar menjadi responsif */
+  height: auto; /* Menjaga aspek rasio gambar */
+  margin-top: 10px;
+  margin-bottom: 10px; /* Menambahkan jarak antara gambar-gambar */
+}
+
 .offer-card2 {
   padding: 20px;
   display: flex;

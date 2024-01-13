@@ -195,6 +195,28 @@ function displayChapterContent(chapterNumber) {
   }
 }
 
+
+// Fungsi untuk menambahkan event listener pada tombol "Close Chapter"
+function addCloseChapterListener() {
+  var closeChapterButton = document.querySelector("[data-chapter='0']");
+
+  if (closeChapterButton) {
+    closeChapterButton.addEventListener("click", closeChapter);
+  }
+}
+
+// Fungsi untuk membersihkan container dari gambar-gambar sebelumnya
+function closeChapter() {
+  var container = document.getElementById("chapterImages");
+
+  if (container) {
+    // Membersihkan container
+    container.innerHTML = "";
+  }
+}
+
+
+
 // Fungsi untuk memeriksa keberadaan gambar
 function imageExists(url, callback) {
   var img = new Image();

@@ -156,8 +156,6 @@ function displayChapterContent(chapterNumber) {
         console.log("Cover1 image not found.");
       }
 
-
-      
       displayChapterImages();
     }); 
   });
@@ -214,7 +212,6 @@ function closeChapter() {
     container.innerHTML = "";
   }
 }
-
 
 
 // Fungsi untuk memeriksa keberadaan gambar

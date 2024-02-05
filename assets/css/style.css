@@ -142,6 +142,13 @@ body {
   line-height: 1.5;
 }
 
+body.Read {
+  background-color: hsl(0, 0%, 0%);;
+  color: var(--black);
+  font-size: 1.6rem;
+  line-height: 1.5;
+}
+
 body.Preview {
   background-color: hsl(0, 0%, 35%);;
   color: var(--black);
@@ -665,15 +672,12 @@ body.Preview {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
 }
 
 #chapterImages img {
-  --width: 352px;
-  --height: 528px;
+  width: 100%;
+  min-height: 0 100px;
   width: var(--width);
-  height: var(--height);
-  max-width: var(--width);
   max-width: 100%; /* Gambar tidak akan melebihi lebar kontainer */
   max-height: 100%; /* Gambar tidak akan melebihi tinggi kontainer */
   margin-top: 10px;

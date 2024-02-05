@@ -8,18 +8,25 @@
     <meta name="description" content="This is a site to read Naruto x Boruto manga for free and in high quality">
     <title>BorutoTBV - Chapter 5 - Target</title>
     <script>
-      <!-- document.addEventListener('contextmenu', function (e) {
-        e.preventDefault();
-      }); -->
+     
     </script>
     <link rel="shortcut icon" href="./logoatas.png" type="image/svg+xml">
 </head>
 <body class="Read">
-  <ul>
+  <ul id="ChapterList">
+    <h2 class="h21 section-title">
+      <span id="TitleChapter" class="span"></span>
+  </h2>
     <li>
-      <div id="chapterImages" style="--width: 352; --height: 528;"></div>
+      <div id="chapterImages"></div>
     </li>
   </ul>
+
   <script src="./assets/js/script.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      fetchChapterData();
+    });
+  </script>
 </body>
 </html>

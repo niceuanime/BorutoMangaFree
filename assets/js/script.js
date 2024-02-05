@@ -2,6 +2,20 @@
 
 
 /**
+ * Restrain user for inspecting
+ */
+
+document.addEventListener('contextmenu', function (e) {
+  e.preventDefault();
+});
+
+document.onkeydown = function (e) {
+  if (e.key === "F12") {
+      e.preventDefault();
+  }
+};
+
+/**
  * add event on element
  */
 

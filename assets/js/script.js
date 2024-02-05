@@ -1,5 +1,6 @@
 'use strict';
 
+
 /**
  * add event on element
  */
@@ -13,6 +14,7 @@ const addEventOnElem = function (elem, type, callback) {
     elem.addEventListener(type, callback);
   }
 }
+
 
 
 /**
@@ -59,6 +61,13 @@ const activeElemOnScroll = function () {
 
 addEventOnElem(window, "scroll", activeElemOnScroll);
 
+
+
+
+/**
+ * Add Search Button
+ */
+
 var searchBtn = document.getElementById('searchBtn');
 var searchBarContainer = document.getElementById('searchBarContainer');
 var searchInput = document.getElementById('searchInput');
@@ -81,6 +90,21 @@ searchBarContainer.addEventListener('click', function (event) {
   event.stopPropagation();
 });
 
+
+/**
+ * Implementing Search Function
+ */
+
+
+
+
+
+
+
+
+/**
+ * Connecting The API
+ */
 
 document.addEventListener("DOMContentLoaded", function () {
   const urlParams = new URLSearchParams(window.location.search);
@@ -147,6 +171,12 @@ function fetchChapterData() {
       })
       .catch(error => console.error("Error fetching chapter data:", error));
 }
+
+
+
+/**
+ * Manually Added The Chapter Image
+ */
 
 // Fungsi untuk menampilkan konten chapter di halaman saat ini
 function displayChapterContent(chapterNumber) {

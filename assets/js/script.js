@@ -199,7 +199,7 @@ function displayChapterContent(chapterNumber) {
 
     // Fungsi untuk menampilkan gambar
     function displayImage() {
-      var imagePath = `./assets/images/MangaCover/BorutoTBV/Chapter${chapterNumber}/image${i}.png`;
+      var imagePath = `./assets/images/MangaCover/Minato/Chapter${chapterNumber}/image${i}.png`;
 
       // Mengecek keberadaan gambar
       imageExists(imagePath, function (exists) {

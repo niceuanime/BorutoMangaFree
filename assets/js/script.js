@@ -31,7 +31,6 @@ const addEventOnElem = function (elem, type, callback) {
 }
 
 
-
 /**
  * navbar toggle
  */
@@ -56,7 +55,6 @@ const closeNavbar = function () {
 addEventOnElem(navbarLinks, "click", closeNavbar);
 
 
-
 /**
  * active header when window scroll down to 100px
  */
@@ -75,8 +73,6 @@ const activeElemOnScroll = function () {
 }
 
 addEventOnElem(window, "scroll", activeElemOnScroll);
-
-
 
 
 /**
@@ -112,11 +108,6 @@ searchBarContainer.addEventListener('click', function (event) {
 
 
 
-
-
-
-
-
 /**
  * Connecting The API
  */
@@ -124,42 +115,49 @@ searchBarContainer.addEventListener('click', function (event) {
 document.addEventListener("DOMContentLoaded", function () {
   const urlParams = new URLSearchParams(window.location.search);
   const mangaId = urlParams.get('id');
+  const imagePath = urlParams.get('image');
 
   // Check if mangaId exists before making API request
   if (mangaId) {
-    // Fetch data from the first API endpoint using the mangaId
-    fetch(`https://komiku-api.fly.dev/api/comic/search/${mangaId}`)
-      .then(response => response.json())
-      .then(data => {
-        if (data.success && data.data && data.data.length > 0) {
-          const mangaTitle = data.data[0].title;
+      // Fetch data from the first API endpoint using the mangaId
+      fetch(`https://komiku-api.fly.dev/api/comic/search/${mangaId}`)
+          .then(response => response.json())
+          .then(data => {
+              if (data.success && data.data && data.data.length > 0) {
+                  // Ambil data manga paling bawah dari hasil pencarian
+                  const manga = data.data[data.data.length - 1];
 
-          // Display the fetched title
-          document.getElementById("TitleManga").innerText = mangaTitle;
+                  const mangaTitle = manga.title;
+                  const mangaEndpoint = manga.endpoint;
 
-          // Use the endpoint from the first API for the second API request
-          const mangaEndpoint = data.data[0].endpoint;
+                  // Display the fetched title
+                  document.getElementById("TitleManga").innerText = mangaTitle;
 
-          // Fetch data from the second API endpoint using the mangaEndpoint
-          fetch(`https://komiku-api.fly.dev/api/comic/info${mangaEndpoint}`)
-            .then(response => response.json())
-            .then(data => {
-              const chapterList = data.data.chapter_list;
+                  // Set the manga cover image using the provided image path
+                  document.getElementById("MangaCover").style.backgroundImage = `url('${imagePath}')`;
 
-              const chapterContainer = document.getElementById("ChapterList");
+                  // Fetch data from the second API endpoint using the mangaEndpoint
+                  fetch(`https://komiku-api.fly.dev/api/comic/info${mangaEndpoint}`)
+                      .then(response => response.json())
+                      .then(data => {
+                          const chapterList = data.data.chapter_list;
 
-              chapterList.forEach(chapter => {
-                const listItem = document.createElement("li");
-                listItem.innerHTML = `<a class="chapter-link" href="Read.html?endpoint=${chapter.endpoint}">${chapter.name}<span id="TitleChapter"></span></a>`;
-                chapterContainer.appendChild(listItem);
-              });
-            })
-            .catch(error => console.error("Error fetching data from the second API:", error));
-        } else {
-          console.error("No valid manga data found in the response from the first API.");
-        }
-      })
-      .catch(error => console.error("Error fetching data from the first API:", error));
+                          const chapterContainer = document.getElementById("ChapterList");
+
+                          chapterList.forEach(chapter => {
+                              const listItem = document.createElement("li");
+                              listItem.innerHTML = `<a class="chapter-link" href="Read.html?endpoint=${chapter.endpoint}">${chapter.name}<span id="TitleChapter"></span></a>`;
+                              chapterContainer.appendChild(listItem);
+                          });
+                      })
+                      .catch(error => console.error("Error fetching data from the second API:", error));
+              } else {
+                  console.error(`No manga found with the id '${mangaId}'.`);
+              }
+          })
+          .catch(error => console.error("Error fetching data from the first API:", error));
+  } else {
+      console.error("No manga id provided in the URL.");
   }
 });
 
@@ -186,7 +184,6 @@ function fetchChapterData() {
       })
       .catch(error => console.error("Error fetching chapter data:", error));
 }
-
 
 
 /**

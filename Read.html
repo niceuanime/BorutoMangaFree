@@ -13,6 +13,14 @@
     <link rel="shortcut icon" href="./logoatas.png" type="image/svg+xml">
 </head>
 <body class="Read">
+
+  <div class="loader-wrapper">
+    <div class="loader">
+        <span class="loader-text">loading</span>
+        <span class="load"></span>
+    </div>
+  </div>
+  
   <ul id="ChapterList">
     <h2 class="h21 section-title">
       <span id="TitleChapter" class="span"></span>
@@ -23,6 +31,7 @@
     </li>
   </ul>
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="./assets/js/script.js" defer></script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {

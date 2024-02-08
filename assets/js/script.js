@@ -17,6 +17,22 @@ document.onkeydown = function (e) {
 
 
 /**
+ * add PreLoader
+ */
+
+$(window).on("load", function(){
+  // Nonaktifkan scroll
+  $("body").css("overflow", "hidden");
+
+  // Timer untuk mengaktifkan kembali scroll setelah 2 detik (2000 milidetik)
+  setTimeout(function(){
+      $("body").css("overflow", "auto");
+      $(".loader-wrapper").hide(); // Menyembunyikan loader
+  }, 1500);
+});
+
+
+/**
  * add event on element
  */
 

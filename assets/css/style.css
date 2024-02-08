@@ -206,7 +206,7 @@ body.Preview {
   background-color: #fc7b64;
   border-radius: 50px;
   display: block;
-  height: 16px;
+  height: 4px;
   width: 16px;
   bottom: 0;
   position: absolute;
@@ -232,7 +232,7 @@ body.Preview {
 
   40% {
     letter-spacing: 2px;
-    transform: translateX(26px);
+    transform: translateX(0px);
   }
 
   80% {
@@ -258,7 +258,7 @@ body.Preview {
   }
 
   40% {
-    width: 200%;
+    width: 80%;
     transform: translateX(0px);
   }
 
@@ -268,7 +268,7 @@ body.Preview {
   }
 
   90% {
-    width: 200%;
+    width: 80%;
     transform: translateX(0px);
   }
 
@@ -1006,7 +1006,6 @@ body.Preview {
 
 
 
-
 /*-----------------------------------*\
   #MEDIA QUERIES
 \*-----------------------------------*/
@@ -1081,9 +1080,6 @@ body.Preview {
 
 
 
-
-
-
 @media (min-width: 575px) {
 
   /**
@@ -1100,7 +1096,6 @@ body.Preview {
     --fs-3: 2.6rem;
 
   }
-
 
 
   /**
@@ -1125,7 +1120,6 @@ body.Preview {
   }
 
 
-
   /**
    * OFFER
    */
@@ -1145,8 +1139,6 @@ body.Preview {
   .footer-top .container { grid-template-columns: 1fr 1fr; }
 
 }
-
-
 
 
 
@@ -1171,7 +1163,6 @@ body.Preview {
   }
 
 
-
   /**
    * REUSED STYLE
    */
@@ -1179,7 +1170,6 @@ body.Preview {
   .scrollbar-item { min-width: calc(33.33% - 20px); }
 
   .grid-list { grid-template-columns: repeat(3, 1fr); }
-
 
 
   /**
@@ -1198,7 +1188,6 @@ body.Preview {
   }
   
 
-
   /**
    * OFFER
    */
@@ -1216,8 +1205,6 @@ body.Preview {
   }
 
 }
-
-
 
 
 
@@ -1247,7 +1234,6 @@ body.Preview {
     --section-padding: 50px;
 
   }
-
 
 
   /**
@@ -1316,7 +1302,6 @@ body.Preview {
   .offer .grid-list { grid-template-columns: repeat(4, 0.4fr); }
 
 
-
   .search-bar:focus {
     width: 200px;
   }
@@ -1336,9 +1321,6 @@ body.Preview {
   .footer-top .container { grid-template-columns: 1fr 0.5fr 0.5fr 0.5fr; }
 
 }
-
-
-
 
 
 /**
@@ -1369,7 +1351,6 @@ body.Preview {
   .grid-list { grid-template-columns: repeat(4, 1fr); }
 
   .offer .grid-list { grid-template-columns: repeat(5, 0.5fr); }
-
 
   .btn {
     background-color: var(--amber);

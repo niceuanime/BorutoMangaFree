@@ -5,15 +5,15 @@
  * Restrain user for inspecting
  */
 
-// document.addEventListener('contextmenu', function (e) {
-//   e.preventDefault();
-// });
+document.addEventListener('contextmenu', function (e) {
+  e.preventDefault();
+});
 
-// document.onkeydown = function (e) {
-//   if (e.key === "F12") {
-//       e.preventDefault();
-//   }
-// };
+document.onkeydown = function (e) {
+  if (e.key === "F12") {
+      e.preventDefault();
+  }
+};
 
 
 /**
@@ -121,6 +121,41 @@ searchBarContainer.addEventListener('click', function (event) {
 /**
  * Implementing Search Function
  */
+
+// Menambahkan event listener ke document untuk event 'click'
+document.addEventListener('click', function(event) {
+  // Memeriksa apakah yang diklik adalah tombol pencarian
+  if (event.target.id === 'searchBtn') {
+    var searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
+    
+    // Check if search term is not empty
+    if (searchTerm !== '') {
+      var items = document.querySelectorAll('li[id]'); // Mengambil semua elemen <li> yang memiliki ID
+      var found = false;
+
+      items.forEach(function(item) {
+        // Normalize id attribute value for partial matching
+        var itemIdNormalized = item.id.trim().toLowerCase();
+        
+        // Check if the id attribute value contains the search term
+        if (itemIdNormalized.includes(searchTerm)) {
+          found = true;
+          item.scrollIntoView({behavior: "smooth", block: "center"});
+          // Redirect user to index.html and set hash to the matching item's id
+          window.location.href = './index.html#' + encodeURIComponent(searchTerm);
+        }
+      });
+
+      if (!found) {
+        // Jika data tidak ditemukan di halaman saat ini, arahkan pengguna ke halaman Index.html
+        window.location.href = './index.html#' + encodeURIComponent(searchTerm);
+      }
+
+      // Reset search input
+      document.getElementById('searchInput').value = '';
+    }
+  }
+});
 
 
 

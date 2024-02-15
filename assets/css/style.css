@@ -306,6 +306,196 @@ body.Preview {
 }
 
 
+/* Pagination */
+
+#Pagination {
+  position: relative;
+  background: #fff;
+  display: flex; /* Menggunakan flexbox */
+  justify-content: center; /* Mengatur posisi horizontal ke tengah */
+  align-items: center; /* Mengatur posisi vertikal ke tengah */
+  padding: 7px 7px;
+  border-radius: 30px;
+  box-shadow: 0 5px 15px rgba(0,0,0,.1);
+  width: 24vw; /* Ukuran pagination berdasarkan lebar layar */
+  margin: 0 auto; /* Mengatur margin otomatis untuk mengatur di tengah */
+  border: 2px solid var(--amber);
+  cursor: pointer;
+}
+
+#Pagination li {
+  list-style: none;
+  line-height: 30px;
+  margin: 0 5px;
+}
+
+#Pagination li.pageNumber {
+  flex-grow: 1; /* Ukuran pagination mengikuti jumlah elemen li */
+  height: 33px;
+  line-height: 33px;
+  text-align: center;
+}
+
+#Pagination li a {
+  display: block;
+  text-decoration: none;
+  color: #000000;
+  font-size: 13px;
+  font-weight: bold;
+  border-radius: 50%;
+}
+
+#Pagination li.pageNumber:hover a,
+#Pagination li.pageNumber.active a {
+  background: var(--amber);;
+}
+
+/* Responsif */
+@media screen and (max-width: 1200px) {
+  #Pagination {
+    padding: 5px 10px;
+    width: 40%;
+    border-radius: 20px;
+  }
+  #Pagination li {
+    margin: 0 8px;
+  }
+  #Pagination li a {
+    font-size: 14px;
+  }
+
+  #Pagination li.pageNumber {
+    height: 40px;
+    line-height: 40px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  #Pagination {
+    padding: 5px 15px;
+    width: 45%;
+    border-radius: 20px;
+  }
+  #Pagination li {
+    margin: 0 8px;
+  }
+  #Pagination li a {
+    font-size: 12px;
+  }
+  #Pagination li.pageNumber {
+    height: 40px;
+    line-height: 40px;
+  }
+}
+
+@media screen and (max-width: 788px) {
+  #Pagination {
+    padding: 5px 5px;
+    width: 55%;
+    border-radius: 20px;
+  }
+  #Pagination li {
+    margin: 0 10px;
+  }
+  #Pagination li a {
+    font-size: 10px;
+  }
+  #Pagination li.pageNumber {
+    height: 40px;
+    line-height: 40px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  #Pagination {
+    padding: 2px 2px;
+    width: 40%;
+    border-radius: 20px;
+  }
+  #Pagination li {
+    margin: 0 6px;
+  }
+  #Pagination li a {
+    font-size: 8px;
+  }
+  #Pagination li.pageNumber {
+    height: 20px;
+    line-height: 20px;
+  }
+}
+
+@media screen and (max-width: 670px) {
+  #Pagination {
+    padding: 2px 2px;
+    width: 50%;
+    border-radius: 15px;
+  }
+  #Pagination li {
+    margin: 0 6px;
+  }
+  #Pagination li a {
+    font-size: 8px;
+  }
+  #Pagination li.pageNumber {
+    height: 30px;
+    line-height: 30px;
+  }
+}
+
+@media screen and (max-width: 490px) {
+  #Pagination {
+    width: 50%;
+    padding: 2px 2px;
+    border-radius: 17px;
+  }
+  #Pagination li {
+    margin: 0 6px;
+  }
+  #Pagination li a {
+    font-size: 8px;
+  }
+  #Pagination li.pageNumber {
+    height: 20px;
+    line-height: 20px;
+  }
+}
+
+
+@media screen and (max-width: 414px) {
+  #Pagination {
+    width: 50%;
+    padding: 2px 2px;
+    border-radius: 17px;
+  }
+  #Pagination li {
+    margin: 0 5px;
+  }
+  #Pagination li a {
+    font-size: 8px;
+  }
+  #Pagination li.pageNumber {
+    height: 20px;
+    line-height: 20px;
+  }
+}
+
+@media screen and (max-width: 376px) {
+  #Pagination {
+    width: 50%;
+    padding: 2px 2px;
+    border-radius: 15px;
+  }
+  #Pagination li {
+    margin: 0 3px;
+  }
+  #Pagination li a {
+    font-size: 8px;
+  }
+  #Pagination li.pageNumber {
+    height: 18px;
+    line-height: 18px;
+  }
+}
 /* Styling untuk tombol previous dan next */
 .nav-button {
   font-family: var(--ff-bangers);
@@ -469,6 +659,101 @@ body.Preview {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  
+}
+
+.manga-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(calc(25% - 30px), 1fr));
+  gap: 30px; /* Jarak antar gambar */
+  align-items: center;
+  justify-content: center;
+}
+
+/* Gambar manga */
+.manga-image {
+  width: 280px; /* Lebar gambar tetap 280px */
+  height: 89px; /* Tinggi gambar tetap 89px */
+  overflow: hidden; /* Memastikan gambar tidak keluar dari batas area */
+  border-radius: var(--radius-10); /* Mengatur radius border sesuai kebutuhan */
+  display: flex; /* Menggunakan flexbox */
+  align-items: center; /* Menengahkan gambar vertikal */
+  justify-content: center; /* Menengahkan gambar horizontal */
+  margin: 0 auto;
+}
+
+/* Properti untuk gambar di dalam manga-image */
+.manga-image img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; /* Memastikan gambar memuat sepenuhnya ke dalam kotak */
+  object-position: center; /* Posisi gambar di tengah */
+}
+
+/* Responsif */
+/* Responsif */
+@media screen and (max-width: 1200px) {
+  .manga-container {
+    grid-template-columns: repeat(auto-fit, minmax(calc(33.33% - 20px), 1fr));
+    gap: 20px;
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .manga-container {
+    grid-template-columns: repeat(auto-fit, minmax(calc(50% - 15px), 1fr));
+    gap: 15px;
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .manga-container {
+    grid-template-columns: repeat(auto-fit, minmax(calc(50% - 10px), 1fr));
+    gap: 10px;
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: 670px) {
+  .manga-container {
+    grid-template-columns: repeat(auto-fit, minmax(calc(50% - 8px), 1fr));
+    gap: 8px;
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: 580px) {
+  .manga-container {
+    grid-template-columns: repeat(auto-fit, minmax(calc(100% - 5px), 1fr));
+    gap: 5px;
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: 490px) {
+  .manga-container {
+    grid-template-columns: repeat(auto-fit, minmax(calc(100% - 10px), 1fr));
+    gap: 10px;
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: 414px) {
+  .manga-container {
+    grid-template-columns: repeat(auto-fit, minmax(calc(100% - 8px), 1fr));
+    gap: 8px;
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: 376px) {
+  .manga-container {
+    grid-template-columns: repeat(auto-fit, minmax(calc(100% - 5px), 1fr));
+    gap: 5px;
+    align-items: center;
+  }
 }
 
 .has-scrollbar {

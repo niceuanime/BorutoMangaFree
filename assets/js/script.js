@@ -442,10 +442,10 @@ document.addEventListener("DOMContentLoaded", function() {
             mangaItem.innerHTML = `
               <div class="category-card">
                 <figure class="manga-image img-holder" style="--width: 350; --height: 212;">
-                  <a href="./Preview.html?id=${manga.endpoint}&image=${manga.image}"><img src="${manga.image}" loading="lazy" alt="Cover Picture"></a>
+                  <a href="./Preview.html?id1=${manga.endpoint}&image=${manga.image}"><img src="${manga.image}" loading="lazy" alt="Cover Picture"></a>
                 </figure>
                 <h4 class="h4">
-                  <a href="./Preview.html?id=${manga.endpoint}&image=${manga.image}" class="card-title" style="font-size: 12px;">${manga.title}</a>
+                  <a href="./Preview.html?id1=${manga.endpoint}&image=${manga.image}" class="card-title" style="font-size: 12px;">${manga.title}</a>
                 </h4>
               </div>
             `;
@@ -488,12 +488,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
 if (window.location.pathname === '/Preview.html') {
   const urlParams = new URLSearchParams(window.location.search);
-  const mangaId = urlParams.get('id');
+  const mangaId1 = urlParams.get('id1');
 
   // Check if mangaId exists before making API request
-  if (mangaId) {
+  if (mangaId1) {
     // Fetch data from the fourth API endpoint using the mangaId
-    fetch(`https://komiku-api.fly.dev/api/comic/info/${mangaId}`)
+    fetch(`https://komiku-api.fly.dev/api/comic/info/${mangaId1}`)
       .then(response => response.json())
       .then(data => {
         if (data.success && data.data) {
@@ -514,7 +514,7 @@ if (window.location.pathname === '/Preview.html') {
             chapterContainer.appendChild(listItem);
           });
         } else {
-          console.error(`No manga found with the id '${mangaId}'.`);
+          console.error(`No manga found with the id '${mangaId1}'.`);
         }
       })
       .catch(error => console.error("Error fetching data from the fourth API:", error));

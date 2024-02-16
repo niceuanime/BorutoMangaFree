@@ -442,7 +442,7 @@ document.addEventListener("DOMContentLoaded", function() {
             mangaItem.innerHTML = `
               <div class="category-card">
                 <figure class="manga-image img-holder" style="--width: 350; --height: 212;">
-                  <a href="./Preview.html?id1=${manga.endpoint}"></a>
+                  <a href="./Preview.html?id1=${manga.endpoint}"><img src="${manga.image}" loading="lazy" alt="Cover Picture"></a>
                 </figure>
                 <h4 class="h4">
                   <a href="./Preview.html?id1=${manga.endpoint}" class="card-title" style="font-size: 12px;">${manga.title}</a>
@@ -486,50 +486,42 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 });
 
-if (window.location.pathname === '/Preview.html') {
+document.addEventListener("DOMContentLoaded", function() {
+  // Tangkap parameter id1 dari URL
   const urlParams = new URLSearchParams(window.location.search);
-  const mangaId = urlParams.get('id1'); // Ubah dari mangaId1 ke mangaId
-
-  // Check if mangaId exists before making API request
+  const mangaId = urlParams.get('id1');
+  
+  // Periksa apakah mangaId ada sebelum membuat permintaan API
   if (mangaId) {
-    // Fetch data from the fourth API endpoint using the mangaId
-    fetch(`https://komiku-api.fly.dev/api/comic/info/${mangaId}`)
+    // Gabungkan endpoint manga dengan URL API
+    const apiUrl = `https://komiku-api.fly.dev/api/comic/info/${mangaId}`;
+    
+    // Lakukan permintaan HTTP GET ke URL API
+    fetch(apiUrl)
       .then(response => response.json())
       .then(data => {
-        console.log("API Response:", data); // Log API response
-
-        if (data.success && data.data) {
-          const mangaTitle = data.data.title;
-          const thumbnail = data.data.thumbnail;
-          const chapterList = data.data.chapter_list;
-
-          console.log("Manga Title:", mangaTitle); // Log manga title
-          console.log("Thumbnail URL:", thumbnail); // Log thumbnail URL
-
-          // Display the fetched title and thumbnail
-          document.getElementById("TitleManga").innerText = mangaTitle;
-          document.getElementById("MangaCover").style.backgroundImage = `url('${thumbnail.replace(/^http:\/\//i, 'https://')}')`; // Mengubah protokol HTTP menjadi HTTPS
-
-          // Display the chapter list
-          const chapterContainer = document.getElementById("ChapterList");
-          chapterContainer.innerHTML = ''; // Clear previous chapters
-          chapterList.forEach(chapter => {
-            const listItem = document.createElement("li");
-            listItem.innerHTML = `<a class="chapter-link" href="Read.html?endpoint=${chapter.endpoint}">${chapter.name}<span id="TitleChapter"></span></a>`;
-            chapterContainer.appendChild(listItem);
-          });
-        } else {
-          console.error(`No manga found with the id '${mangaId}'.`);
-        }
+        // Ambil data title dari respons
+        const mangaTitle = data.data.title;
+        const thumbnailUrl = data.data.thumbnail;
+        const chapterList = data.data.chapter_list;
+        
+        // Setel teks dari elemen dengan ID TitleManga
+        document.getElementById("TitleManga").textContent = mangaTitle;
+        document.getElementById("MangaCover").style.backgroundImage = `url('${thumbnailUrl}')`;
+        
+        // Tambahkan daftar chapter ke dalam elemen dengan ID ChapterList
+        const chapterContainer = document.getElementById("ChapterList");
+        chapterList.forEach(chapter => {
+          const listItem = document.createElement("li");
+          listItem.innerHTML = `<a class="chapter-link" href="Read.html?endpoint=${chapter.endpoint}">${chapter.name}<span id="TitleChapter"></span></a>`;
+          chapterContainer.appendChild(listItem);
+        });
       })
-      .catch(error => console.error("Error fetching data from the fourth API:", error));
+      .catch(error => console.error("Error fetching manga info:", error));
   } else {
-    console.error("No manga id provided in the URL.");
+    console.error("No manga ID provided in the URL.");
   }
-}
-
-
-
+});
 
 /**
  * Pagination Function & Recomended API

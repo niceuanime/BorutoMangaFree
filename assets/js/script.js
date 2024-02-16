@@ -407,7 +407,6 @@ document.addEventListener("DOMContentLoaded", function () {
  * Pagination Function & Popular API
  */
 
-
 document.addEventListener("DOMContentLoaded", function() {
   const pagination = document.getElementById("Pagination");
   const pageNumbers = pagination.getElementsByClassName("pageNumber");
@@ -487,3 +486,46 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 });
 
+if (window.location.pathname === '/Preview.html') {
+  document.addEventListener("DOMContentLoaded", function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const mangaId = urlParams.get('id');
+
+    // Check if mangaId exists before making API request
+    if (mangaId) {
+      // Fetch data from the fourth API endpoint using the mangaId
+      fetch(`https://komiku-api.fly.dev/api/comic/info/${mangaId}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.success && data.data) {
+            const mangaTitle = data.data.title;
+            const thumbnail = data.data.thumbnail;
+            const chapterList = data.data.chapter_list;
+
+            // Display the fetched title and thumbnail
+            document.getElementById("TitleManga").innerText = mangaTitle;
+            document.getElementById("MangaCover").style.backgroundImage = `url('${thumbnail}')`;
+
+            // Display the chapter list
+            const chapterContainer = document.getElementById("ChapterList");
+            chapterList.forEach(chapter => {
+              const listItem = document.createElement("li");
+              listItem.innerHTML = `<a class="chapter-link" href="Read.html?endpoint=${chapter.endpoint}">${chapter.name}<span id="TitleChapter"></span></a>`;
+              chapterContainer.appendChild(listItem);
+            });
+          } else {
+            console.error(`No manga found with the id '${mangaId}'.`);
+          }
+        })
+        .catch(error => console.error("Error fetching data from the fourth API:", error));
+    } else {
+      console.error("No manga id provided in the URL.");
+    }
+  });
+}
+
+
+
+/**
+ * Pagination Function & Recomended API
+ */

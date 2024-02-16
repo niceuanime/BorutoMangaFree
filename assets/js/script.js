@@ -442,7 +442,7 @@ document.addEventListener("DOMContentLoaded", function() {
             mangaItem.innerHTML = `
               <div class="category-card">
                 <figure class="manga-image img-holder" style="--width: 350; --height: 212;">
-                  <a href="./Preview.html?id1=${manga.endpoint}"><img src="${manga.image}" loading="lazy" alt="Cover Picture"></a>
+                  <a href="./Preview.html?id1=${manga.endpoint}"></a>
                 </figure>
                 <h4 class="h4">
                   <a href="./Preview.html?id1=${manga.endpoint}" class="card-title" style="font-size: 12px;">${manga.title}</a>

@@ -488,12 +488,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
 if (window.location.pathname === '/Preview.html') {
   const urlParams = new URLSearchParams(window.location.search);
-  const mangaId1 = urlParams.get('id1');
+  const mangaId = urlParams.get('id1'); // Ubah dari mangaId1 ke mangaId
 
   // Check if mangaId exists before making API request
-  if (mangaId1) {
+  if (mangaId) {
     // Fetch data from the fourth API endpoint using the mangaId
-    fetch(`https://komiku-api.fly.dev/api/comic/info/${mangaId1}`)
+    fetch(`https://komiku-api.fly.dev/api/comic/info/${mangaId}`)
       .then(response => response.json())
       .then(data => {
         console.log("API Response:", data); // Log API response
@@ -519,7 +519,7 @@ if (window.location.pathname === '/Preview.html') {
             chapterContainer.appendChild(listItem);
           });
         } else {
-          console.error(`No manga found with the id '${mangaId1}'.`);
+          console.error(`No manga found with the id '${mangaId}'.`);
         }
       })
       .catch(error => console.error("Error fetching data from the fourth API:", error));

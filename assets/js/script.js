@@ -442,10 +442,10 @@ document.addEventListener("DOMContentLoaded", function() {
             mangaItem.innerHTML = `
               <div class="category-card">
                 <figure class="manga-image img-holder" style="--width: 350; --height: 212;">
-                  <a href="./Preview.html?id1=${manga.endpoint}&image=${manga.image}"><img src="${manga.image}" loading="lazy" alt="Cover Picture"></a>
+                  <a href="./Preview.html?id1=${manga.endpoint}"><img src="${manga.image}" loading="lazy" alt="Cover Picture"></a>
                 </figure>
                 <h4 class="h4">
-                  <a href="./Preview.html?id1=${manga.endpoint}&image=${manga.image}" class="card-title" style="font-size: 12px;">${manga.title}</a>
+                  <a href="./Preview.html?id1=${manga.endpoint}" class="card-title" style="font-size: 12px;">${manga.title}</a>
                 </h4>
               </div>
             `;
@@ -508,7 +508,7 @@ if (window.location.pathname === '/Preview.html') {
 
           // Display the fetched title and thumbnail
           document.getElementById("TitleManga").innerText = mangaTitle;
-          document.getElementById("MangaCover").style.backgroundImage = `url('${thumbnail}')`;
+          document.getElementById("MangaCover").style.backgroundImage = `url('${thumbnail.replace(/^http:\/\//i, 'https://')}')`; // Mengubah protokol HTTP menjadi HTTPS
 
           // Display the chapter list
           const chapterContainer = document.getElementById("ChapterList");
@@ -527,6 +527,7 @@ if (window.location.pathname === '/Preview.html') {
     console.error("No manga id provided in the URL.");
   }
 }
+
 
 
 

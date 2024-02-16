@@ -308,7 +308,7 @@ body.Preview {
 
 /* Pagination */
 
-#Pagination {
+.Pagination {
   position: relative;
   background: #fff;
   display: flex; /* Menggunakan flexbox */
@@ -323,20 +323,20 @@ body.Preview {
   cursor: pointer;
 }
 
-#Pagination li {
+.Pagination li {
   list-style: none;
   line-height: 30px;
   margin: 0 5px;
 }
 
-#Pagination li.pageNumber {
+.Pagination li.pageNumber {
   flex-grow: 1; /* Ukuran pagination mengikuti jumlah elemen li */
   height: 33px;
   line-height: 33px;
   text-align: center;
 }
 
-#Pagination li a {
+.Pagination li a {
   display: block;
   text-decoration: none;
   color: #000000;
@@ -345,116 +345,116 @@ body.Preview {
   border-radius: 50%;
 }
 
-#Pagination li.pageNumber:hover a,
-#Pagination li.pageNumber.active a {
+.Pagination li.pageNumber:hover a,
+.Pagination li.pageNumber.active a {
   background: var(--amber);;
 }
 
 /* Responsif */
 @media screen and (max-width: 1200px) {
-  #Pagination {
+  .Pagination {
     padding: 5px 10px;
     width: 40%;
     border-radius: 20px;
   }
-  #Pagination li {
+  .Pagination li {
     margin: 0 8px;
   }
-  #Pagination li a {
+  .Pagination li a {
     font-size: 14px;
   }
 
-  #Pagination li.pageNumber {
+  .Pagination li.pageNumber {
     height: 40px;
     line-height: 40px;
   }
 }
 
 @media screen and (max-width: 992px) {
-  #Pagination {
+  .Pagination {
     padding: 5px 15px;
     width: 45%;
     border-radius: 20px;
   }
-  #Pagination li {
+  .Pagination li {
     margin: 0 8px;
   }
-  #Pagination li a {
+  .Pagination li a {
     font-size: 12px;
   }
-  #Pagination li.pageNumber {
+  .Pagination li.pageNumber {
     height: 40px;
     line-height: 40px;
   }
 }
 
 @media screen and (max-width: 788px) {
-  #Pagination {
+  .Pagination {
     padding: 5px 5px;
     width: 55%;
     border-radius: 20px;
   }
-  #Pagination li {
+  .Pagination li {
     margin: 0 10px;
   }
-  #Pagination li a {
+  .Pagination li a {
     font-size: 10px;
   }
-  #Pagination li.pageNumber {
+  .Pagination li.pageNumber {
     height: 40px;
     line-height: 40px;
   }
 }
 
 @media screen and (max-width: 576px) {
-  #Pagination {
+  .Pagination {
     padding: 2px 2px;
     width: 40%;
     border-radius: 20px;
   }
-  #Pagination li {
+  .Pagination li {
     margin: 0 6px;
   }
-  #Pagination li a {
+  .Pagination li a {
     font-size: 8px;
   }
-  #Pagination li.pageNumber {
+  .Pagination li.pageNumber {
     height: 20px;
     line-height: 20px;
   }
 }
 
 @media screen and (max-width: 670px) {
-  #Pagination {
+  .Pagination {
     padding: 2px 2px;
     width: 50%;
     border-radius: 15px;
   }
-  #Pagination li {
+  .Pagination li {
     margin: 0 6px;
   }
-  #Pagination li a {
+  .Pagination li a {
     font-size: 8px;
   }
-  #Pagination li.pageNumber {
+  .Pagination li.pageNumber {
     height: 30px;
     line-height: 30px;
   }
 }
 
 @media screen and (max-width: 490px) {
-  #Pagination {
+  .Pagination {
     width: 50%;
     padding: 2px 2px;
     border-radius: 17px;
   }
-  #Pagination li {
+  .Pagination li {
     margin: 0 6px;
   }
-  #Pagination li a {
+  .Pagination li a {
     font-size: 8px;
   }
-  #Pagination li.pageNumber {
+  .Pagination li.pageNumber {
     height: 20px;
     line-height: 20px;
   }
@@ -462,36 +462,36 @@ body.Preview {
 
 
 @media screen and (max-width: 414px) {
-  #Pagination {
+  .Pagination {
     width: 50%;
     padding: 2px 2px;
     border-radius: 17px;
   }
-  #Pagination li {
+  .Pagination li {
     margin: 0 5px;
   }
-  #Pagination li a {
+  .Pagination li a {
     font-size: 8px;
   }
-  #Pagination li.pageNumber {
+  .Pagination li.pageNumber {
     height: 20px;
     line-height: 20px;
   }
 }
 
 @media screen and (max-width: 376px) {
-  #Pagination {
+  .Pagination {
     width: 50%;
     padding: 2px 2px;
     border-radius: 15px;
   }
-  #Pagination li {
+  .Pagination li {
     margin: 0 3px;
   }
-  #Pagination li a {
+  .Pagination li a {
     font-size: 8px;
   }
-  #Pagination li.pageNumber {
+  .Pagination li.pageNumber {
     height: 18px;
     line-height: 18px;
   }

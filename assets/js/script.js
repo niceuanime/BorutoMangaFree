@@ -5,15 +5,15 @@
  * Restrain user for inspecting
  */
 
-// document.addEventListener('contextmenu', function (e) {
-//   e.preventDefault();
-// });
+document.addEventListener('contextmenu', function (e) {
+  e.preventDefault();
+});
 
-// document.onkeydown = function (e) {
-//   if (e.key === "F12") {
-//       e.preventDefault();
-//   }
-// };
+document.onkeydown = function (e) {
+  if (e.key === "F12") {
+      e.preventDefault();
+  }
+};
 
 
 /**
@@ -522,6 +522,43 @@ document.addEventListener("DOMContentLoaded", function() {
     console.error("No manga ID provided in the URL.");
   }
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+  // Tangkap parameter endpoint dari URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const endpoint = urlParams.get('endpoint');
+  
+  // Periksa apakah endpoint ada sebelum membuat permintaan API
+  if (endpoint) {
+    // Gabungkan endpoint dengan URL API
+    const apiUrl = `https://komiku-api.fly.dev/api/comic/chapter${endpoint}`;
+    
+    // Lakukan permintaan HTTP GET ke URL API
+    fetch(apiUrl)
+      .then(response => response.json())
+      .then(data => {
+        // Ambil data title dan image dari respons
+        const chapterTitle = data.data.title;
+        const chapterImages = data.data.image;
+        
+        // Setel teks dari elemen dengan ID TitleChapter
+        document.getElementById("TitleChapter").textContent = chapterTitle;
+        
+        // Tambahkan gambar chapter ke dalam elemen dengan ID chapterImages
+        const chapterImagesContainer = document.getElementById("chapterImages");
+        chapterImages.forEach(imageUrl => {
+          const imageElement = document.createElement("img");
+          imageElement.src = imageUrl;
+          chapterImagesContainer.appendChild(imageElement);
+        });
+      })
+      .catch(error => console.error("Error fetching chapter detail:", error));
+  } else {
+    console.error("No endpoint provided in the URL.");
+  }
+});
+
+
 
 /**
  * Pagination Function & Recomended API

@@ -496,10 +496,15 @@ if (window.location.pathname === '/Preview.html') {
     fetch(`https://komiku-api.fly.dev/api/comic/info/${mangaId1}`)
       .then(response => response.json())
       .then(data => {
+        console.log("API Response:", data); // Log API response
+
         if (data.success && data.data) {
           const mangaTitle = data.data.title;
           const thumbnail = data.data.thumbnail;
           const chapterList = data.data.chapter_list;
+
+          console.log("Manga Title:", mangaTitle); // Log manga title
+          console.log("Thumbnail URL:", thumbnail); // Log thumbnail URL
 
           // Display the fetched title and thumbnail
           document.getElementById("TitleManga").innerText = mangaTitle;

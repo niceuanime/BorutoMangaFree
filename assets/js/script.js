@@ -403,85 +403,167 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
+
 /**
- * Pagination Function & Popular API
+ * Pagination Function & Popular and Recommended API
  */
 
 document.addEventListener("DOMContentLoaded", function() {
+  // Pagination untuk Popular
   const pagination = document.getElementById("Pagination");
   const pageNumbers = pagination.getElementsByClassName("pageNumber");
   const prevButton = document.getElementById("prev");
   const nextButton = document.getElementById("next");
-  const mangaList = document.querySelector(".manga-container");
+  const popularMangaList = document.getElementById("popular");
 
-  let currentPage = 1;
-  showPage(currentPage);
+  popularMangaList.innerHTML = "";
 
-  // Function to show the selected page
-  function showPage(page) {
+  let currentPopularPage = 1;
+  showPopularPage(currentPopularPage);
+
+  // Pagination untuk Recommended
+  const pagination2 = document.getElementById("RecommendedPagination");
+  const pageNumbers2 = pagination2.getElementsByClassName("recommendedPageNumber");
+  const prevButton2 = document.getElementById("prev2");
+  const nextButton2 = document.getElementById("next2");
+  const recommendedMangaList = document.getElementById("recommend");
+
+  recommendedMangaList.innerHTML = "";
+
+  let currentRecommendedPage = 1;
+  showRecommendedPage(currentRecommendedPage);
+
+  function showPopularPage(page) {
     // Remove active class from all page numbers
     for (let i = 0; i < pageNumbers.length; i++) {
       pageNumbers[i].classList.remove("active");
     }
     // Add active class to the selected page number
     pageNumbers[page - 1].classList.add("active");
-    currentPage = page;
+    currentPopularPage = page;
+  
+    // Fetch data from the API based on the selected page number
+    fetch(`https://komiku-api.fly.dev/api/comic/popular/page/${currentPopularPage}`)
+    .then(response => response.json())
+    .then(data => {
+      if (data.success && data.data && data.data.length > 0) {
+        // Clear existing manga list
+        popularMangaList.innerHTML = "";
+        // Loop through each manga item from the API data
+        data.data.forEach(manga => {
+          // Create an element for each manga item
+          const mangaItem = document.createElement("li");
+          mangaItem.className = "scrollbar-item";
+          mangaItem.innerHTML = `
+            <div class="category-card">
+              <figure class="manga-image img-holder" style="--width: 350; --height: 212;">
+                <a href="./Preview.html?id1=${manga.endpoint}"><img src="${manga.image}" loading="lazy" alt="Cover Picture"></a>
+              </figure>
+              <h4 class="h4">
+                <a href="./Preview.html?id1=${manga.endpoint}" class="card-title" style="font-size: 12px;">${manga.title}</a>
+              </h4>
+            </div>
+          `;
+          // Add manga item to the manga list
+          popularMangaList.appendChild(mangaItem);
+        });
+      } else {
+        console.error("No manga data found.");
+      }
+    })
+    .catch(error => console.error("Error fetching manga data:", error));
+  }
+
+  function showRecommendedPage(page) {
+    // Remove active class from all page numbers
+    for (let i = 0; i < pageNumbers2.length; i++) {
+      pageNumbers2[i].classList.remove("active");
+    }
+    // Add active class to the selected page number
+    pageNumbers2[page - 1].classList.add("active");
+    currentRecommendedPage = page;
 
     // Fetch data from the API based on the selected page number
-    fetch(`https://komiku-api.fly.dev/api/comic/popular/page/${currentPage}`)
-      .then(response => response.json())
-      .then(data => {
-        if (data.success && data.data && data.data.length > 0) {
-          // Clear existing manga list
-          mangaList.innerHTML = "";
-          // Loop through each manga item from the API data
-          data.data.forEach(manga => {
-            // Create an element for each manga item
-            const mangaItem = document.createElement("li");
-            mangaItem.className = "scrollbar-item";
-            mangaItem.innerHTML = `
-              <div class="category-card">
-                <figure class="manga-image img-holder" style="--width: 350; --height: 212;">
-                  <a href="./Preview.html?id1=${manga.endpoint}"><img src="${manga.image}" loading="lazy" alt="Cover Picture"></a>
-                </figure>
-                <h4 class="h4">
-                  <a href="./Preview.html?id1=${manga.endpoint}" class="card-title" style="font-size: 12px;">${manga.title}</a>
-                </h4>
-              </div>
-            `;
-            // Add manga item to the manga list
-            mangaList.appendChild(mangaItem);
-          });
-        } else {
-          console.error("No manga data found.");
-        }
-      })
-      .catch(error => console.error("Error fetching manga data:", error));
+    fetch(`https://komiku-api.fly.dev/api/comic/recommended/page/${currentRecommendedPage}`)
+    .then(response => response.json())
+    .then(data => {
+      if (data.success && data.data && data.data.length > 0) {
+        // Clear existing manga list
+        recommendedMangaList.innerHTML = "";
+        // Loop through each manga item from the API data
+        data.data.forEach(manga => {
+          // Create an element for each manga item
+          const mangaItem2 = document.createElement("li");
+          mangaItem2.className = "scrollbar-item";
+          mangaItem2.innerHTML = `
+            <div class="category-card">
+              <figure class="manga-image img-holder" style="--width: 350px; --height: 212px;"> <!-- Add px here -->
+                <a href="./Preview.html?id1=${manga.endpoint}"><img src="${manga.image}" loading="lazy" alt="Cover Picture"></a>
+              </figure>
+              <h4 class="h4">
+                <a href="./Preview.html?id1=${manga.endpoint}" class="card-title" style="font-size: 12px;">${manga.title}</a>
+              </h4>
+            </div>
+          `;
+          // Add manga item to the manga list
+          recommendedMangaList.appendChild(mangaItem2);
+        });
+      } else {
+        console.error("No manga data found.");
+      }
+    })
+    .catch(error => console.error("Error fetching manga data:", error));
   }
 
-  // Event listener for page numbers
-  for (let i = 0; i < pageNumbers.length; i++) {
-    pageNumbers[i].addEventListener("click", function() {
-      const pageNumber = parseInt(this.innerText);
-      showPage(pageNumber);
-    });
-  }
+    // Event listener for Popular page numbers
+    for (let i = 0; i < pageNumbers.length; i++) {
+      pageNumbers[i].addEventListener("click", function() {
+        const pageNumber = parseInt(this.innerText);
+        showPopularPage(pageNumber);
+      });
+    }
 
-  // Event listener for Previous button
+  // Event listener for Popular Previous button
   prevButton.addEventListener("click", function() {
-    if (currentPage === 1) {
-      showPage(5);
+    if (currentPopularPage === 1) {
+      showPopularPage(5);
     } else {
-      showPage(currentPage - 1);
+      showPopularPage(currentPopularPage - 1);
     }
   });
 
-  // Event listener for Next button
+  // Event listener for Popular Next button
   nextButton.addEventListener("click", function() {
-    if (currentPage === 5) {
-      showPage(1);
+    if (currentPopularPage === 5) {
+      showPopularPage(1);
     } else {
-      showPage(currentPage + 1);
+      showPopularPage(currentPopularPage + 1);
+    }
+  });
+
+  // Event listener for Recommended page numbers
+  for (let i = 0; i < pageNumbers2.length; i++) {
+    pageNumbers2[i].addEventListener("click", function() {
+      const pageNumber2 = parseInt(this.innerText);
+      showRecommendedPage(pageNumber2);
+    });
+  }
+
+  // Event listener for Recommended Previous button
+  prevButton2.addEventListener("click", function() {
+    if (currentRecommendedPage === 1) {
+      showRecommendedPage(5);
+    } else {
+      showRecommendedPage(currentRecommendedPage - 1);
+    }
+  });
+
+  // Event listener for Recommended Next button
+  nextButton2.addEventListener("click", function() {
+    if (currentRecommendedPage === 5) {
+      showRecommendedPage(1);
+    } else {
+      showRecommendedPage(currentRecommendedPage + 1);
     }
   });
 });
@@ -557,81 +639,6 @@ document.addEventListener("DOMContentLoaded", function() {
     console.error("No endpoint provided in the URL.");
   }
 });
-
-
-
-/**
- * Pagination Function & Recomended API
- */
-
-document.addEventListener("DOMContentLoaded", function() {
-  const pagination = document.getElementById("RecommendedPagination"); // Menggunakan id yang unik
-  const pageNumbers = pagination.getElementsByClassName("pageNumber");
-  const prevButton = pagination.getElementsByClassName("prev")[0]; // Menggunakan [0] karena prevButton hanya satu
-  const nextButton = pagination.getElementsByClassName("next")[0]; // Menggunakan [0] karena nextButton hanya satu
-  const mangaList = document.getElementById("recommend");
-
-  let currentPage = 1;
-  showPage(currentPage);
-
-  function showPage(page) {
-    for (let i = 0; i < pageNumbers.length; i++) {
-      pageNumbers[i].classList.remove("active");
-    }
-    pageNumbers[page - 1].classList.add("active");
-    currentPage = page;
-
-    fetch(`https://komiku-api.fly.dev/api/comic/recommended/page/${currentPage}`)
-      .then(response => response.json())
-      .then(data => {
-        if (data.success && data.data && data.data.length > 0) {
-          mangaList.innerHTML = "";
-          data.data.forEach(manga => {
-            const mangaItem = document.createElement("li");
-            mangaItem.className = "scrollbar-item";
-            mangaItem.innerHTML = `
-              <div class="category-card">
-                <figure class="manga-image img-holder" style="--width: 350; --height: 212;">
-                  <a href="./Preview.html?id1=${manga.endpoint}"><img src="${manga.image}" loading="lazy" alt="Cover Picture"></a>
-                </figure>
-                <h4 class="h4">
-                  <a href="./Preview.html?id1=${manga.endpoint}" class="card-title" style="font-size: 12px;">${manga.title}</a>
-                </h4>
-              </div>
-            `;
-            mangaList.appendChild(mangaItem);
-          });
-        } else {
-          console.error("No manga data found.");
-        }
-      })
-      .catch(error => console.error("Error fetching manga data:", error));
-  }
-
-  for (let i = 0; i < pageNumbers.length; i++) {
-    pageNumbers[i].addEventListener("click", function() {
-      const pageNumber = parseInt(this.innerText);
-      showPage(pageNumber);
-    });
-  }
-
-  prevButton.addEventListener("click", function() {
-    if (currentPage === 1) {
-      showPage(5);
-    } else {
-      showPage(currentPage - 1);
-    }
-  });
-
-  nextButton.addEventListener("click", function() {
-    if (currentPage === 5) {
-      showPage(1);
-    } else {
-      showPage(currentPage + 1);
-    }
-  });
-});
-
 
 
 /**

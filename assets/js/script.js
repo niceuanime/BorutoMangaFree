@@ -5,15 +5,15 @@
  * Restrain user for inspecting
  */
 
-document.addEventListener('contextmenu', function (e) {
-  e.preventDefault();
-});
+// document.addEventListener('contextmenu', function (e) {
+//   e.preventDefault();
+// });
 
-document.onkeydown = function (e) {
-  if (e.key === "F12") {
-      e.preventDefault();
-  }
-};
+// document.onkeydown = function (e) {
+//   if (e.key === "F12") {
+//       e.preventDefault();
+//   }
+// };
 
 
 /**
@@ -432,6 +432,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
   let currentRecommendedPage = 1;
   showRecommendedPage(currentRecommendedPage);
+  
+  let totalPages = 8; // Gantilah dengan jumlah total halaman untuk kategori Popular
+  let totalRecommendedPages = 20; // Gantilah dengan jumlah total halaman untuk kategori Recommended
 
   function showPopularPage(page) {
     // Remove active class from all page numbers
@@ -514,14 +517,62 @@ document.addEventListener("DOMContentLoaded", function() {
     })
     .catch(error => console.error("Error fetching manga data:", error));
   }
-
-    // Event listener for Popular page numbers
+  function updatePageNumbersVisibility() {
+    // Update visibility and set active state for Popular
+    const startingPagePopular = Math.max(1, Math.min(currentPopularPage - 2, totalPages - 5));
+  
     for (let i = 0; i < pageNumbers.length; i++) {
-      pageNumbers[i].addEventListener("click", function() {
-        const pageNumber = parseInt(this.innerText);
-        showPopularPage(pageNumber);
-      });
+      const pageNumber = startingPagePopular + i;
+      const pageNumberElement = pageNumbers[i];
+  
+      if (pageNumber <= totalPages) {
+        pageNumberElement.style.display = "block";
+        pageNumberElement.getElementsByTagName("a")[0].innerText = pageNumber;
+  
+        if (pageNumber === currentPopularPage) {
+          pageNumberElement.classList.add("active");
+        } else {
+          pageNumberElement.classList.remove("active");
+        }
+      } else {
+        pageNumberElement.style.display = "none";
+      }
     }
+  
+    // Update visibility and set active state for Recommended
+    const startingPageRecommended = Math.max(1, Math.min(currentRecommendedPage - 2, totalRecommendedPages - 7));
+  
+    for (let i = 0; i < pageNumbers2.length; i++) {
+      const pageNumber = startingPageRecommended + i;
+      const pageNumberElement = pageNumbers2[i];
+  
+      if (pageNumber <= totalRecommendedPages) {
+        pageNumberElement.style.display = "block";
+        pageNumberElement.getElementsByTagName("a")[0].innerText = pageNumber;
+  
+        if (pageNumber === currentRecommendedPage) {
+          pageNumberElement.classList.add("active");
+        } else {
+          pageNumberElement.classList.remove("active");
+        }
+      } else {
+        pageNumberElement.style.display = "none";
+      }
+    }
+  }
+  
+  
+  // Initialize visibility
+  updatePageNumbersVisibility();
+
+  // Event listener for Popular page numbers
+  for (let i = 0; i < pageNumbers.length; i++) {
+    pageNumbers[i].addEventListener("click", function () {
+      const pageNumber = parseInt(this.innerText);
+      showPopularPage(pageNumber);
+      updatePageNumbersVisibility(); // Tambahkan ini
+    });
+  }
 
   // Event listener for Popular Previous button
   prevButton.addEventListener("click", function() {
@@ -530,22 +581,26 @@ document.addEventListener("DOMContentLoaded", function() {
     } else {
       showPopularPage(currentPopularPage - 1);
     }
+    updatePageNumbersVisibility();
   });
 
   // Event listener for Popular Next button
   nextButton.addEventListener("click", function() {
-    if (currentPopularPage === 5) {
+    if (currentPopularPage === totalPages) {
+      // Jika sudah di halaman terakhir, kembali ke halaman pertama
       showPopularPage(1);
     } else {
       showPopularPage(currentPopularPage + 1);
     }
+    updatePageNumbersVisibility();
   });
 
   // Event listener for Recommended page numbers
   for (let i = 0; i < pageNumbers2.length; i++) {
-    pageNumbers2[i].addEventListener("click", function() {
+    pageNumbers2[i].addEventListener("click", function () {
       const pageNumber2 = parseInt(this.innerText);
       showRecommendedPage(pageNumber2);
+      updatePageNumbersVisibility(); // Tambahkan ini
     });
   }
 
@@ -556,15 +611,18 @@ document.addEventListener("DOMContentLoaded", function() {
     } else {
       showRecommendedPage(currentRecommendedPage - 1);
     }
+    updatePageNumbersVisibility();
   });
 
   // Event listener for Recommended Next button
   nextButton2.addEventListener("click", function() {
-    if (currentRecommendedPage === 5) {
+    if (currentRecommendedPage === totalRecommendedPages) {
+      // Jika sudah di halaman terakhir, kembali ke halaman pertama
       showRecommendedPage(1);
     } else {
       showRecommendedPage(currentRecommendedPage + 1);
     }
+    updatePageNumbersVisibility();
   });
 });
 

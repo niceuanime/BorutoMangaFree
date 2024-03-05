@@ -311,30 +311,32 @@ body.Preview {
 .Pagination {
   position: relative;
   background: #fff;
-  display: flex; /* Menggunakan flexbox */
-  justify-content: center; /* Mengatur posisi horizontal ke tengah */
-  align-items: center; /* Mengatur posisi vertikal ke tengah */
-  padding: 7px 7px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding:7px 0;
   border-radius: 30px;
-  box-shadow: 0 5px 15px rgba(0,0,0,.1);
-  width: 24vw; /* Ukuran pagination berdasarkan lebar layar */
-  margin: 0 auto; /* Mengatur margin otomatis untuk mengatur di tengah */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  width: 24vw;
+  margin: 0 auto;
   border: 2px solid var(--amber);
   cursor: pointer;
+  overflow-x: hidden;
+}
+
+.Pagination .pageNumbers {
+  display: flex;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  overflow: auto;
+  overflow-x: hidden;
 }
 
 .Pagination li {
-  list-style: none;
   line-height: 30px;
   margin: 0 5px;
-}
-
-.Pagination li.pageNumber,
-.Pagination li.recommendedPageNumber {
-  flex-grow: 1; /* Ukuran pagination mengikuti jumlah elemen li */
-  height: 33px;
-  line-height: 33px;
-  text-align: center;
+  flex-shrink: 0;
 }
 
 .Pagination li a {
@@ -350,7 +352,7 @@ body.Preview {
 .Pagination li.pageNumber.active a,
 .Pagination li.recommendedPageNumber:hover a,
 .Pagination li.recommendedPageNumber.active a {
-  background: var(--amber);;
+  color: var(--amber);
 }
 
 /* Responsif */

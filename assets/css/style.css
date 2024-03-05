@@ -314,10 +314,10 @@ body.Preview {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding:7px 0;
+  padding: 7px 0;
   border-radius: 30px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  width: 24vw;
+  width: 55vw;
   margin: 0 auto;
   border: 2px solid var(--amber);
   cursor: pointer;
@@ -325,6 +325,7 @@ body.Preview {
 }
 
 .Pagination .pageNumbers {
+  gap: 12px;
   display: flex;
   padding: 0;
   margin: 0;
@@ -359,8 +360,11 @@ body.Preview {
 @media screen and (max-width: 1200px) {
   .Pagination {
     padding: 5px 10px;
-    width: 40%;
+    width: 85%;
     border-radius: 20px;
+  }
+  .Pagination .pageNumbers {
+    gap: 10px;
   }
   .Pagination li {
     margin: 0 8px;
@@ -379,8 +383,11 @@ body.Preview {
 @media screen and (max-width: 992px) {
   .Pagination {
     padding: 5px 15px;
-    width: 45%;
+    width: 85%;
     border-radius: 20px;
+  }
+  .Pagination .pageNumbers {
+    gap: 10px;
   }
   .Pagination li {
     margin: 0 8px;
@@ -397,9 +404,12 @@ body.Preview {
 
 @media screen and (max-width: 788px) {
   .Pagination {
-    padding: 5px 5px;
-    width: 55%;
-    border-radius: 20px;
+    width: 85%;
+    padding: 2px 2px;
+    border-radius: 17px;
+  }
+  .Pagination .pageNumbers {
+    gap: 10px;
   }
   .Pagination li {
     margin: 0 10px;
@@ -420,11 +430,14 @@ body.Preview {
     width: 40%;
     border-radius: 20px;
   }
+  .Pagination .pageNumbers {
+    gap: 12px;
+  }
   .Pagination li {
     margin: 0 6px;
   }
   .Pagination li a {
-    font-size: 8px;
+    font-size: 10px;
   }
   .Pagination li.pageNumber,
   .Pagination li.recommendedPageNumber {
@@ -435,15 +448,18 @@ body.Preview {
 
 @media screen and (max-width: 670px) {
   .Pagination {
+    width: 85%;
     padding: 2px 2px;
-    width: 50%;
-    border-radius: 15px;
+    border-radius: 17px;
+  }
+  .Pagination .pageNumbers {
+    gap: 12px;
   }
   .Pagination li {
     margin: 0 6px;
   }
   .Pagination li a {
-    font-size: 8px;
+    font-size: 10px;
   }
   .Pagination li.pageNumber,
   .Pagination li.recommendedPageNumber {
@@ -454,9 +470,12 @@ body.Preview {
 
 @media screen and (max-width: 490px) {
   .Pagination {
-    width: 50%;
+    width: 85%;
     padding: 2px 2px;
     border-radius: 17px;
+  }
+  .Pagination .pageNumbers {
+    gap: 12px;
   }
   .Pagination li {
     margin: 0 6px;
@@ -474,15 +493,19 @@ body.Preview {
 
 @media screen and (max-width: 414px) {
   .Pagination {
-    width: 50%;
+    width: 80%;
     padding: 2px 2px;
     border-radius: 17px;
+  }
+  .Pagination .pageNumbers {
+    gap: 12px;
   }
   .Pagination li {
     margin: 0 5px;
   }
   .Pagination li a {
-    font-size: 8px;
+    font-size: 9px;
+    padding: 0 5px
   }
   .Pagination li.pageNumber,
   .Pagination li.recommendedPageNumber {
@@ -492,16 +515,21 @@ body.Preview {
 }
 
 @media screen and (max-width: 376px) {
+  
   .Pagination {
-    width: 50%;
+    width: 95%;
     padding: 2px 2px;
     border-radius: 15px;
+  }
+  .Pagination .pageNumbers {
+    gap: 12px;
   }
   .Pagination li {
     margin: 0 3px;
   }
   .Pagination li a {
-    font-size: 8px;
+    font-size: 11px;
+    padding: 0 6px
   }
   .Pagination li.pageNumber,
   .Pagination li.recommendedPageNumber {
@@ -1369,7 +1397,6 @@ body.Preview {
     width: 130px;
   }
   
-
   /**
    * HERO
    */
@@ -1450,7 +1477,6 @@ body.Preview {
   .search-bar:focus {
     width: 160px;
   }
-  
 
   /**
    * FOOTER

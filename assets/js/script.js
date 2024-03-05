@@ -5,15 +5,15 @@
  * Restrain user for inspecting
  */
 
-document.addEventListener('contextmenu', function (e) {
-  e.preventDefault();
-});
+// document.addEventListener('contextmenu', function (e) {
+//   e.preventDefault();
+// });
 
-document.onkeydown = function (e) {
-  if (e.key === "F12") {
-      e.preventDefault();
-  }
-};
+// document.onkeydown = function (e) {
+//   if (e.key === "F12") {
+//       e.preventDefault();
+//   }
+// };
 
 
 /**
@@ -540,7 +540,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   
     // Update visibility and set active state for Recommended
-    const startingPageRecommended = Math.max(1, Math.min(currentRecommendedPage - 2, totalRecommendedPages - 7));
+    const startingPageRecommended = Math.max(1, Math.min(currentRecommendedPage - 2, totalRecommendedPages - 4));
   
     for (let i = 0; i < pageNumbers2.length; i++) {
       const pageNumber = startingPageRecommended + i;

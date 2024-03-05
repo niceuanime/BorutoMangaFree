@@ -305,7 +305,6 @@ body.Preview {
   }
 }
 
-
 /* Pagination */
 
 .Pagination {
@@ -317,7 +316,7 @@ body.Preview {
   padding: 7px 0;
   border-radius: 30px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  width: 55vw;
+  width: 24vw;
   margin: 0 auto;
   border: 2px solid var(--amber);
   cursor: pointer;
@@ -360,7 +359,7 @@ body.Preview {
 @media screen and (max-width: 1200px) {
   .Pagination {
     padding: 5px 10px;
-    width: 85%;
+    width: 35%;
     border-radius: 20px;
   }
   .Pagination .pageNumbers {
@@ -383,7 +382,7 @@ body.Preview {
 @media screen and (max-width: 992px) {
   .Pagination {
     padding: 5px 15px;
-    width: 85%;
+    width: 43%;
     border-radius: 20px;
   }
   .Pagination .pageNumbers {
@@ -404,7 +403,7 @@ body.Preview {
 
 @media screen and (max-width: 788px) {
   .Pagination {
-    width: 85%;
+    width: 43%;
     padding: 2px 2px;
     border-radius: 17px;
   }
@@ -424,31 +423,10 @@ body.Preview {
   }
 }
 
-@media screen and (max-width: 576px) {
-  .Pagination {
-    padding: 2px 2px;
-    width: 40%;
-    border-radius: 20px;
-  }
-  .Pagination .pageNumbers {
-    gap: 12px;
-  }
-  .Pagination li {
-    margin: 0 6px;
-  }
-  .Pagination li a {
-    font-size: 10px;
-  }
-  .Pagination li.pageNumber,
-  .Pagination li.recommendedPageNumber {
-    height: 20px;
-    line-height: 20px;
-  }
-}
 
 @media screen and (max-width: 670px) {
   .Pagination {
-    width: 85%;
+    width: 46%;
     padding: 2px 2px;
     border-radius: 17px;
   }
@@ -468,9 +446,31 @@ body.Preview {
   }
 }
 
+@media screen and (max-width: 576px) {
+  .Pagination {
+    padding: 2px 2px;
+    width: 56%;
+    border-radius: 20px;
+  }
+  .Pagination .pageNumbers {
+    gap: 12px;
+  }
+  .Pagination li {
+    margin: 0 6px;
+  }
+  .Pagination li a {
+    font-size: 10px;
+  }
+  .Pagination li.pageNumber,
+  .Pagination li.recommendedPageNumber {
+    height: 20px;
+    line-height: 20px;
+  }
+}
+
 @media screen and (max-width: 490px) {
   .Pagination {
-    width: 85%;
+    width: 65%;
     padding: 2px 2px;
     border-radius: 17px;
   }
@@ -533,6 +533,239 @@ body.Preview {
   }
   .Pagination li.pageNumber,
   .Pagination li.recommendedPageNumber {
+    height: 18px;
+    line-height: 18px;
+  }
+}
+
+
+/* Pagination1 */
+
+.Pagination1 {
+  position: relative;
+  background: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 0;
+  border-radius: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  width: 55vw;
+  margin: 0 auto;
+  border: 2px solid var(--amber);
+  cursor: pointer;
+  overflow-x: hidden;
+}
+
+.Pagination1 .pageNumbers {
+  gap: 12px;
+  display: flex;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  overflow: auto;
+  overflow-x: hidden;
+}
+
+.Pagination1 li {
+  line-height: 30px;
+  margin: 0 5px;
+  flex-shrink: 0;
+}
+
+.Pagination1 li a {
+  display: block;
+  text-decoration: none;
+  color: #000000;
+  font-size: 13px;
+  font-weight: bold;
+  border-radius: 50%;
+}
+
+.Pagination1 li.pageNumber:hover a,
+.Pagination1 li.pageNumber.active a,
+.Pagination1 li.recommendedPageNumber:hover a,
+.Pagination1 li.recommendedPageNumber.active a {
+  color: var(--amber);
+}
+
+/* Responsif */
+@media screen and (max-width: 1200px) {
+  .Pagination1 {
+    padding: 5px 10px;
+    width: 85%;
+    border-radius: 20px;
+  }
+  .Pagination1 .pageNumbers {
+    gap: 10px;
+  }
+  .Pagination1 li {
+    margin: 0 8px;
+  }
+  .Pagination1 li a {
+    font-size: 14px;
+  }
+
+  .Pagination1 li.pageNumber,
+  .Pagination1 li.recommendedPageNumber {
+    height: 40px;
+    line-height: 40px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .Pagination1 {
+    padding: 5px 15px;
+    width: 85%;
+    border-radius: 20px;
+  }
+  .Pagination1 .pageNumbers {
+    gap: 10px;
+  }
+  .Pagination1 li {
+    margin: 0 8px;
+  }
+  .Pagination1 li a {
+    font-size: 12px;
+  }
+  .Pagination1 li.pageNumber,
+  .Pagination1 li.recommendedPageNumber {
+    height: 40px;
+    line-height: 40px;
+  }
+}
+
+@media screen and (max-width: 788px) {
+  .Pagination1 {
+    width: 85%;
+    padding: 2px 2px;
+    border-radius: 17px;
+  }
+  .Pagination1 .pageNumbers {
+    gap: 10px;
+  }
+  .Pagination1 li {
+    margin: 0 10px;
+  }
+  .Pagination1 li a {
+    font-size: 10px;
+  }
+  .Pagination1 li.pageNumber,
+  .Pagination1 li.recommendedPageNumber {
+    height: 40px;
+    line-height: 40px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .Pagination1 {
+    padding: 2px 2px;
+    width: 40%;
+    border-radius: 20px;
+  }
+  .Pagination1 .pageNumbers {
+    gap: 12px;
+  }
+  .Pagination1 li {
+    margin: 0 6px;
+  }
+  .Pagination1 li a {
+    font-size: 10px;
+  }
+  .Pagination1 li.pageNumber,
+  .Pagination1 li.recommendedPageNumber {
+    height: 20px;
+    line-height: 20px;
+  }
+}
+
+@media screen and (max-width: 670px) {
+  .Pagination1 {
+    width: 85%;
+    padding: 2px 2px;
+    border-radius: 17px;
+  }
+  .Pagination1 .pageNumbers {
+    gap: 12px;
+  }
+  .Pagination1 li {
+    margin: 0 6px;
+  }
+  .Pagination1 li a {
+    font-size: 10px;
+  }
+  .Pagination1 li.pageNumber,
+  .Pagination1 li.recommendedPageNumber {
+    height: 30px;
+    line-height: 30px;
+  }
+}
+
+@media screen and (max-width: 490px) {
+  .Pagination1 {
+    width: 85%;
+    padding: 2px 2px;
+    border-radius: 17px;
+  }
+  .Pagination1 .pageNumbers {
+    gap: 12px;
+  }
+  .Pagination1 li {
+    margin: 0 6px;
+  }
+  .Pagination1 li a {
+    font-size: 8px;
+  }
+  .Pagination1 li.pageNumber,
+  .Pagination1 li.recommendedPageNumber {
+    height: 20px;
+    line-height: 20px;
+  }
+}
+
+
+@media screen and (max-width: 414px) {
+  .Pagination1 {
+    width: 80%;
+    padding: 2px 2px;
+    border-radius: 17px;
+  }
+  .Pagination1 .pageNumbers {
+    gap: 12px;
+  }
+  .Pagination1 li {
+    margin: 0 5px;
+  }
+  .Pagination1 li a {
+    font-size: 9px;
+    padding: 0 5px
+  }
+  .Pagination1 li.pageNumber,
+  .Pagination1 li.recommendedPageNumber {
+    height: 20px;
+    line-height: 20px;
+  }
+}
+
+@media screen and (max-width: 376px) {
+  
+  .Pagination1 {
+    width: 95%;
+    padding: 2px 2px;
+    border-radius: 15px;
+  }
+  .Pagination1 .pageNumbers {
+    gap: 12px;
+  }
+  .Pagination1 li {
+    margin: 0 3px;
+  }
+  .Pagination1 li a {
+    font-size: 11px;
+    padding: 0 6px
+  }
+  .Pagination1 li.pageNumber,
+  .Pagination1 li.recommendedPageNumber {
     height: 18px;
     line-height: 18px;
   }

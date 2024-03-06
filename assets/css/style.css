@@ -550,7 +550,7 @@ body.Preview {
   padding: 7px 0;
   border-radius: 30px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  width: 55vw;
+  width: 51vw;
   margin: 0 auto;
   border: 2px solid var(--amber);
   cursor: pointer;
@@ -808,7 +808,17 @@ body.Preview {
   border-radius: 50px;
   transition: var(--transition-1);
 }
+::-webkit-scrollbar {
+  width: 6px;
+}
 
+.Preview::-webkit-scrollbar-track {
+  background-color: hsl(0, 0%, 35%);
+}
+::-webkit-scrollbar-thumb {
+  background-color: #999;
+  border-radius: 6px;
+}
 .btn1 {
   background-color: transparent;
   color: var(--black);

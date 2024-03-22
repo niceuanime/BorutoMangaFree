@@ -1416,6 +1416,7 @@ body.Preview {
   margin: 0 auto;
   overflow-y: auto; /* Menambahkan scroll bar pada sumbu Y jika kontennya melebihi ketinggian maksimum */
   max-height: 300px; /* Sesuaikan dengan tinggi maksimum yang diinginkan */
+  overflow-x: hidden;
 }
 
 .chapter-container li {

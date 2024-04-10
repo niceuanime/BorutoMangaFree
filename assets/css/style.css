@@ -47,12 +47,12 @@
   --fs-1: 6.5rem;
   --fs-2: 3.2rem;
   --fs-3: 2.4rem;
-  --fs-4: 2rem;
+  --fs-4: 2.8rem;
   --fs-5: 1.8rem;
   --fs-6: 1.5rem;
   --fs-7: 1.4rem;
   --fs-8: 1rem;
-
+  --fs-9: 2.2rem;
   --fw-400: 400;
   --fw-700: 700;
 
@@ -143,7 +143,7 @@ body {
 }
 
 body.Read {
-  background-color: hsl(0, 0%, 0%);;
+  background-color: hsl(0, 0%, 35%);
   color: var(--black);
   font-size: 1.6rem;
   line-height: 1.5;
@@ -913,6 +913,11 @@ body.Preview {
 
 .h3 { font-size: var(--fs-3); }
 
+.h5 { 
+  font-size: var(--fs-4); 
+  color: white;
+}
+
 .btn {
   background-color: var(--black);
   color: var(--white);
@@ -1021,6 +1026,12 @@ body.Preview {
     grid-template-columns: repeat(auto-fit, minmax(calc(100% - 10px), 1fr));
     gap: 10px;
     align-items: center;
+  }
+}
+@media screen and (max-width: 430px) {
+  .h5 { 
+    font-size: var(--fs-9); 
+    color: white;
   }
 }
 
@@ -1469,6 +1480,9 @@ body.Preview {
   height: 2px;
   background-color: #00bcd4;
   margin: 10px 0;
+}
+.intro{
+  color: white;
 }
 
 /*-----------------------------------*\

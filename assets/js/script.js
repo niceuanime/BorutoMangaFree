@@ -98,17 +98,23 @@ addEventOnElem(window, "scroll", activeElemOnScroll);
 var searchBtn = document.getElementById('searchBtn');
 var searchBarContainer = document.getElementById('searchBarContainer');
 var searchInput = document.getElementById('searchInput');
+var isSearchBarVisible = false; // Variabel untuk melacak apakah search bar ditampilkan
 
 // Show search bar when searchBtn is clicked
-searchBtn.addEventListener('click', function () {
-  searchBarContainer.style.display = 'block';
-  searchInput.focus();
+searchBtn.addEventListener('click', function (event) {
+  event.preventDefault(); // Mencegah perilaku default jika searchBtn adalah bagian dari form
+  if (!isSearchBarVisible) {
+    searchBarContainer.style.display = 'block';
+    searchInput.focus();
+    isSearchBarVisible = true; // Perbarui status karena search bar sekarang ditampilkan
+  }
 });
 
 // Hide search bar when clicking outside the search bar
 document.addEventListener('click', function (event) {
-  if (!searchBarContainer.contains(event.target) && event.target !== searchBtn) {
+  if (isSearchBarVisible && !searchBarContainer.contains(event.target) && event.target !== searchBtn) {
     searchBarContainer.style.display = 'none';
+    isSearchBarVisible = false; // Perbarui status karena search bar sekarang disembunyikan
   }
 });
 
@@ -122,41 +128,77 @@ searchBarContainer.addEventListener('click', function (event) {
  * Implementing Search Function ((MASIH ERROR)/ON PROGRESS)
  */
 
-// Menambahkan event listener ke document untuk event 'click'
-document.addEventListener('click', function(event) {
-  // Memeriksa apakah yang diklik adalah tombol pencarian
-  if (event.target.id === 'searchBtn') {
-    var searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
-    
-    // Check if search term is not empty
-    if (searchTerm !== '') {
-      var items = document.querySelectorAll('li[id]'); // Mengambil semua elemen <li> yang memiliki ID
-      var found = false;
+var idMap = {};
 
-      items.forEach(function(item) {
-        // Normalize id attribute value for partial matching
-        var itemIdNormalized = item.id.trim().toLowerCase();
-        
-        // Check if the id attribute value contains the search term
-        if (itemIdNormalized.includes(searchTerm)) {
-          found = true;
-          item.scrollIntoView({behavior: "smooth", block: "center"});
-          // Redirect user to index.html and set hash to the matching item's id
-          window.location.href = './index.html#' + encodeURIComponent(searchTerm);
-        }
-      });
-
-      if (!found) {
-        // Jika data tidak ditemukan di halaman saat ini, arahkan pengguna ke halaman Index.html
-        window.location.href = './index.html#' + encodeURIComponent(searchTerm);
-      }
-
-      // Reset search input
-      document.getElementById('searchInput').value = '';
-    }
+document.addEventListener("DOMContentLoaded", function() {
+  // Fungsi untuk menampilkan halaman Popular dan Recommended
+  // Pastikan untuk memanggil fungsi ini setelah data berhasil diambil dari API
+  function updateIdMap() {
+    var elementsWithId = document.querySelectorAll('[id]');
+    elementsWithId.forEach(function(elem) {
+      var normalizedId = elem.id.replace(/[^a-zA-Z0-9 \-]/g, '').toLowerCase();
+      idMap[normalizedId] = elem;
+      console.log("Added to idMap:", normalizedId); // Debugging: Log setiap id yang ditambahkan
+    });
   }
-});
 
+
+  // Event listener untuk pencarian
+  document.addEventListener('click', function(event) {
+    if (event.target.id === 'searchBtn' && isSearchBarVisible && searchInput.value.trim() !== '') {
+      search();
+      isSearchBarVisible = false;
+    }
+  });
+  
+  // Tambahkan pendengar acara untuk kejadian "keypress" pada input pencarian
+  document.getElementById('searchInput').addEventListener('keypress', function(event) {
+    if (event.key === 'Enter' && isSearchBarVisible && searchInput.value.trim() !== '') {
+      search();
+      isSearchBarVisible = false;
+    }
+  });
+  
+  function search() {
+    isSearchBarVisible = false;
+    var searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
+    var formattedSearchTerm = searchTerm.replace(/[^a-zA-Z0-9 \-]/g, '').toLowerCase();
+    console.log("Searching for:", formattedSearchTerm); // Debugging: Log searchTerm
+  
+    var targetElement = idMap[formattedSearchTerm];
+    if (!targetElement) {
+      // Jika tidak ditemukan berdasarkan manga.title, coba cari berdasarkan id secara eksplisit
+      var allLinks = document.querySelectorAll('[id]');
+      for (var i = 0; i < allLinks.length; i++) {
+        var id = allLinks[i].id.replace(/[^a-zA-Z0-9 \-]/g, '').toLowerCase();
+        if (id.includes(formattedSearchTerm)) {
+          targetElement = allLinks[i];
+          break;
+        }
+      }
+    }
+  
+    if (!targetElement) {
+      // Jika masih tidak ditemukan, coba cari kecocokan parsial
+      for (var key in idMap) {
+        if (key.includes(formattedSearchTerm)) {
+          targetElement = idMap[key];
+          break; // Keluar dari loop setelah menemukan elemen pertama yang cocok
+        }
+      }
+    }
+  
+    console.log("Found element:", targetElement); // Debugging: Log elemen yang ditemukan
+  
+    if (targetElement) {
+      targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      console.log("Element not found for:", formattedSearchTerm); // Debugging: Log jika tidak ditemukan
+    }
+    document.getElementById('searchInput').value = '';
+  }
+  
+});
 
 
 /**
@@ -164,6 +206,8 @@ document.addEventListener('click', function(event) {
  */
 
 document.addEventListener("DOMContentLoaded", function () {
+  // Inisialisasi peta ID
+
   const urlParams = new URLSearchParams(window.location.search);
   const mangaId = urlParams.get('id');
   const imagePath = urlParams.get('image');
@@ -212,7 +256,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-function fetchChapterData() {
+  function fetchChapterData() {
   // Mendapatkan nilai endpoint dari URL
   const urlParams = new URLSearchParams(window.location.search);
   const endpoint = urlParams.get('endpoint');
@@ -237,178 +281,15 @@ function fetchChapterData() {
 }
 
 
-/**
- * Manually Added The Chapter Image
- */
-
-// Fungsi untuk menampilkan konten chapter di halaman saat ini
-function displayChapterContent(chapterNumber) {
-  // Mendapatkan elemen container di Read.html
-  var container = document.getElementById("chapterImages");
-
-  if (!container) {
-    console.error("Error: Element with id 'chapterImages' not found.");
-    return;
-  }
-
-  console.log(`Selected chapter: ${chapterNumber}`);
-
-  // Membersihkan container dari gambar-gambar sebelumnya
-  container.innerHTML = "";
-
-  // Menampilkan Cover.png terlebih dahulu
-  var coverPath = `./assets/images/MangaCover/Minato/Chapter${chapterNumber}/Cover.png`;
-  imageExists(coverPath, function (coverExists) {
-    if (coverExists) {
-      console.log(`Appending cover image: ${coverPath}`);
-
-      var coverElement = new Image();
-      coverElement.src = coverPath;
-      container.appendChild(coverElement);
-    } else {
-      console.log("Cover image not found.");
-    }
-
-    var coverPath1 = `./assets/images/MangaCover/Minato/Chapter${chapterNumber}/Cover1.png`;
-    imageExists(coverPath1, function (cover1Exists) {
-      if (cover1Exists) {
-        console.log(`Appending cover image: ${coverPath1}`);
-
-        var cover1Element = new Image();
-        cover1Element.src = coverPath1;
-        container.appendChild(cover1Element);
-      } else {
-        console.log("Cover1 image not found.");
-      }
-
-      displayChapterImages();
-    }); 
-  });
-  
-  
-  // Fungsi untuk menampilkan gambar-gambar chapter
-  function displayChapterImages() {
-    var i = 1;
-
-    // Fungsi untuk menampilkan gambar
-    function displayImage() {
-      var imagePath = `./assets/images/MangaCover/Minato/Chapter${chapterNumber}/image${i}.png`;
-
-      // Mengecek keberadaan gambar
-      imageExists(imagePath, function (exists) {
-        if (exists) {
-          console.log(`Appending image: ${imagePath}`);
-
-          var imageElement = new Image();
-          imageElement.src = imagePath;
-          container.appendChild(imageElement);
-
-          // Melanjutkan untuk menampilkan gambar berikutnya
-          i++;
-          displayImage();
-        } else {
-          // Menghentikan rekursi jika tidak ada gambar lagi
-          console.log("No more images found.");
-        }
-      });
-    }
-
-    // Memanggil fungsi untuk menampilkan gambar
-    displayImage();
-  }
-}
-
-
-// Fungsi untuk menambahkan event listener pada tombol "Close Chapter"
-function addCloseChapterListener() {
-  var closeChapterButton = document.querySelector("[data-chapter='0']");
-
-  if (closeChapterButton) {
-    closeChapterButton.addEventListener("click", closeChapter);
-  }
-}
-
-// Fungsi untuk membersihkan container dari gambar-gambar sebelumnya
-function closeChapter() {
-  var container = document.getElementById("chapterImages");
-
-  if (container) {
-    // Membersihkan container
-    container.innerHTML = "";
-  }
-}
-
-
-// Fungsi untuk memeriksa keberadaan gambar
-function imageExists(url, callback) {
-  var img = new Image();
-  img.onload = function () {
-    callback(true);
-  };
-  img.onerror = function () {
-    callback(false);
-  };
-  img.src = url;
-}
-
-window.addEventListener("load", function () {
-  // Mendapatkan semua elemen link chapter di preview.html
-  var chapterLinks = document.querySelectorAll(".chapter-link");
-
-  if (!chapterLinks.length) {
-    console.error("Error: No elements with class 'chapter-link' found.");
-    return;
-  }
-
-  // Fungsi untuk menangani klik pada link chapter
-  function handleChapterClick(event) {
-    // Mencegah tindakan default dari link
-    event.preventDefault();
-
-    // Mendapatkan nomor chapter dari data-chapter atribut
-    var chapterNumber = event.currentTarget.getAttribute("data-chapter");
-
-    console.log(`Clicked on chapter ${chapterNumber}`);
-
-    // Menyimpan nomor chapter yang dipilih ke sessionStorage
-    sessionStorage.setItem("selectedChapter", chapterNumber);
-
-    // Menampilkan konten chapter di halaman saat ini
-    displayChapterContent(chapterNumber);
-  }
-
-  // Menambahkan event listener pada setiap link chapter
-  chapterLinks.forEach(function (link) {
-    link.addEventListener("click", handleChapterClick);
-  });
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-  // Mendapatkan elemen container di Read.html
-  var container = document.getElementById("chapterImages");
-
-  if (!container) {
-    console.error("Error: Element with id 'chapterImages' not found.");
-    return;
-  }
-
-  // Mengambil nomor chapter dari sessionStorage
-  var selectedChapter = sessionStorage.getItem("selectedChapter");
-
-  if (selectedChapter) {
-    console.log(`Selected chapter: ${selectedChapter}`);
-  } else {
-    console.error("Error: No selected chapter found.");
-  }
-});
-
-
 
 /**
  * Pagination Function & Popular and Recommended API
  */
 
 document.addEventListener("DOMContentLoaded", function() {
+  // Inisialisasi peta ID
+
+
   // Pagination untuk Popular
   const pagination = document.getElementById("Pagination");
   const pageNumbers = pagination.getElementsByClassName("pageNumber");
@@ -458,7 +339,7 @@ document.addEventListener("DOMContentLoaded", function() {
           const mangaItem = document.createElement("li");
           mangaItem.className = "scrollbar-item";
           mangaItem.innerHTML = `
-            <div class="category-card">
+            <div class="category-card" id="${manga.title}">
               <figure class="manga-image img-holder" style="--width: 350; --height: 212;">
                 <a href="./Preview.html?id1=${manga.endpoint}"><img src="${manga.image}" loading="lazy" alt="Cover Picture"></a>
               </figure>
@@ -469,6 +350,10 @@ document.addEventListener("DOMContentLoaded", function() {
           `;
           // Add manga item to the manga list
           popularMangaList.appendChild(mangaItem);
+          // Tambahkan id manga.title ke dalam peta idMap
+          var normalizedId = manga.title.replace(/[^a-zA-Z0-9 \-]/g, '').toLowerCase();
+          idMap[normalizedId] = document.getElementById(manga.title); // Simpan referensi ke id
+          console.log("Added to idMap:", normalizedId); // Debugging: Log setiap id yang ditambahkan
         });
       } else {
         console.error("No manga data found.");
@@ -499,7 +384,7 @@ document.addEventListener("DOMContentLoaded", function() {
           const mangaItem2 = document.createElement("li");
           mangaItem2.className = "scrollbar-item";
           mangaItem2.innerHTML = `
-            <div class="category-card">
+            <div class="category-card" id="${manga.title}">
               <figure class="manga-image img-holder" style="--width: 350px; --height: 212px;"> <!-- Add px here -->
                 <a href="./Preview.html?id1=${manga.endpoint}"><img src="${manga.image}" loading="lazy" alt="Cover Picture"></a>
               </figure>
@@ -510,6 +395,10 @@ document.addEventListener("DOMContentLoaded", function() {
           `;
           // Add manga item to the manga list
           recommendedMangaList.appendChild(mangaItem2);
+          // Tambahkan id manga.title ke dalam peta idMap
+          var normalizedId2 = manga.title.replace(/[^a-zA-Z0-9 \-]/g, '').toLowerCase();
+          idMap[normalizedId2] = document.getElementById(manga.title); // Simpan referensi ke id
+          console.log("Added to idMap:", normalizedId2); // Debugging: Log setiap id yang ditambahkan
         });
       } else {
         console.error("No manga data found.");
@@ -697,6 +586,173 @@ document.addEventListener("DOMContentLoaded", function() {
     console.error("No endpoint provided in the URL.");
   }
 });
+
+
+/**
+ * Manually Added The Chapter Image
+ */
+
+// Fungsi untuk menampilkan konten chapter di halaman saat ini
+function displayChapterContent(chapterNumber) {
+  // Mendapatkan elemen container di Read.html
+  var container = document.getElementById("chapterImages");
+
+  if (!container) {
+    console.error("Error: Element with id 'chapterImages' not found.");
+    return;
+  }
+
+  console.log(`Selected chapter: ${chapterNumber}`);
+
+  // Membersihkan container dari gambar-gambar sebelumnya
+  container.innerHTML = "";
+
+  // Menampilkan Cover.png terlebih dahulu
+  var coverPath = `./assets/images/MangaCover/Minato/Chapter${chapterNumber}/Cover.png`;
+  imageExists(coverPath, function (coverExists) {
+    if (coverExists) {
+      console.log(`Appending cover image: ${coverPath}`);
+
+      var coverElement = new Image();
+      coverElement.src = coverPath;
+      container.appendChild(coverElement);
+    } else {
+      console.log("Cover image not found.");
+    }
+
+    var coverPath1 = `./assets/images/MangaCover/Minato/Chapter${chapterNumber}/Cover1.png`;
+    imageExists(coverPath1, function (cover1Exists) {
+      if (cover1Exists) {
+        console.log(`Appending cover image: ${coverPath1}`);
+
+        var cover1Element = new Image();
+        cover1Element.src = coverPath1;
+        container.appendChild(cover1Element);
+      } else {
+        console.log("Cover1 image not found.");
+      }
+
+      displayChapterImages();
+    }); 
+  });
+  
+  
+  // Fungsi untuk menampilkan gambar-gambar chapter
+  function displayChapterImages() {
+    var i = 1;
+
+    // Fungsi untuk menampilkan gambar
+    function displayImage() {
+      var imagePath = `./assets/images/MangaCover/Minato/Chapter${chapterNumber}/image${i}.png`;
+
+      // Mengecek keberadaan gambar
+      imageExists(imagePath, function (exists) {
+        if (exists) {
+          console.log(`Appending image: ${imagePath}`);
+
+          var imageElement = new Image();
+          imageElement.src = imagePath;
+          container.appendChild(imageElement);
+
+          // Melanjutkan untuk menampilkan gambar berikutnya
+          i++;
+          displayImage();
+        } else {
+          // Menghentikan rekursi jika tidak ada gambar lagi
+          console.log("No more images found.");
+        }
+      });
+    }
+
+    // Memanggil fungsi untuk menampilkan gambar
+    displayImage();
+  }
+}
+
+
+// Fungsi untuk menambahkan event listener pada tombol "Close Chapter"
+function addCloseChapterListener() {
+  var closeChapterButton = document.querySelector("[data-chapter='0']");
+
+  if (closeChapterButton) {
+    closeChapterButton.addEventListener("click", closeChapter);
+  }
+}
+
+// Fungsi untuk membersihkan container dari gambar-gambar sebelumnya
+function closeChapter() {
+  var container = document.getElementById("chapterImages");
+
+  if (container) {
+    // Membersihkan container
+    container.innerHTML = "";
+  }
+}
+
+
+// Fungsi untuk memeriksa keberadaan gambar
+function imageExists(url, callback) {
+  var img = new Image();
+  img.onload = function () {
+    callback(true);
+  };
+  img.onerror = function () {
+    callback(false);
+  };
+  img.src = url;
+}
+
+window.addEventListener("load", function () {
+  // Mendapatkan semua elemen link chapter di preview.html
+  var chapterLinks = document.querySelectorAll(".chapter-link");
+
+  if (!chapterLinks.length) {
+    console.error("Error: No elements with class 'chapter-link' found.");
+    return;
+  }
+
+  // Fungsi untuk menangani klik pada link chapter
+  function handleChapterClick(event) {
+    // Mencegah tindakan default dari link
+    event.preventDefault();
+
+    // Mendapatkan nomor chapter dari data-chapter atribut
+    var chapterNumber = event.currentTarget.getAttribute("data-chapter");
+
+    console.log(`Clicked on chapter ${chapterNumber}`);
+
+    // Menyimpan nomor chapter yang dipilih ke sessionStorage
+    sessionStorage.setItem("selectedChapter", chapterNumber);
+
+    // Menampilkan konten chapter di halaman saat ini
+    displayChapterContent(chapterNumber);
+  }
+
+  // Menambahkan event listener pada setiap link chapter
+  chapterLinks.forEach(function (link) {
+    link.addEventListener("click", handleChapterClick);
+  });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Mendapatkan elemen container di Read.html
+  var container = document.getElementById("chapterImages");
+
+  if (!container) {
+    console.error("Error: Element with id 'chapterImages' not found.");
+    return;
+  }
+
+  // Mengambil nomor chapter dari sessionStorage
+  var selectedChapter = sessionStorage.getItem("selectedChapter");
+
+  if (selectedChapter) {
+    console.log(`Selected chapter: ${selectedChapter}`);
+  } else {
+    console.error("Error: No selected chapter found.");
+  }
+});
+
 
 
 /**
